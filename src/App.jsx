@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
-
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import HomePage from "./Pages/HomePage";
 function App() {
   const [noPage, setNoPage] = useState(1);
   function nextPage(event) {
@@ -26,7 +28,7 @@ function App() {
     }
   }
 
-  console.log(noPage);
+
 
   const [movies, setMovies] = useState([]);
   // function getAllMovies() {
@@ -54,7 +56,7 @@ function App() {
       axios
         .get(URL)
         .then((response) => {
-          console.log(response.data);
+        
           const data = response.data;
           setMovies(data.results);
         })
@@ -63,31 +65,13 @@ function App() {
 
     getAllMovies();
   }, [noPage]); // Add noPage as a dependency
-  console.log(movies);
+
   return (
     <>
-      <h1>Pass Time</h1>
-      <div>
-        {movies.map((movie) => {
-          return (
-            <div key={movie.id}>
-              <h1>{movie.original_title}</h1>
-              <p>{movie.overview}</p>
-              <img
-                src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                alt=""
-                width={150}
-              />
-            </div>
-          );
-        })}
-      </div>
-      <div>
-        <button onClick={nextPage}>next Page</button>
-      </div>
-      <div>
-        <button onClick={previousPage}>previous page</button>
-      </div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
     </>
   );
 }
