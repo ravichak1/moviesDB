@@ -4,6 +4,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import HomePage from "./Pages/HomePage";
+import MoviePage from "./Pages/MoviePage";
 function App() {
   const [noPage, setNoPage] = useState(1);
   function nextPage(event) {
@@ -31,23 +32,7 @@ function App() {
 
 
   const [movies, setMovies] = useState([]);
-  // function getAllMovies() {
-  //   const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";
-  //   const URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&page=${noPage}`;
-  //   axios
-  //     .get(URL)
-  //     .then((response) => {
-  //       c
-  //       console.log(response.data);
-  //       const data = response.data;
-  //       // console.log(data.results)
-  //       setMovies(data.results);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
-  // useEffect(() => {
-  //   getAllMovies();
-  // }, [noPage]);
+ 
 
   useEffect(() => {
     function getAllMovies() {
@@ -64,13 +49,14 @@ function App() {
     }
 
     getAllMovies();
-  }, [noPage]); // Add noPage as a dependency
+  }, []); // Add noPage as a dependency
 
   return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path='/movie/:movieId' element={<MoviePage movies={movies}/>}/>
       </Routes>
     </>
   );

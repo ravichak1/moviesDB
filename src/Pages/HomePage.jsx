@@ -1,7 +1,15 @@
 import React, { Children } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { API_KEY } from "../const";
 import Upcoming from "../components/Upcoming/Upcoming";
+import Box from "@mui/material/Box";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/ChevronRight";
+import TextField from "@mui/material/TextField";
+import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
 function HomePage() {
   const [movies, setMovies] = useState([]);
   const [searchMovie, setSearchMovie] = useState("");
@@ -32,17 +40,15 @@ function HomePage() {
 
   useEffect(() => {
     const handler = setTimeout(() => {
-        setInputSearchmovie(searchMovie);
-      }, 500);
-  
-      return () => {
-        clearTimeout(handler);
-      };
-    }, [searchMovie]);
+      setInputSearchmovie(searchMovie);
+    }, 500);
 
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchMovie]);
 
-  function getAllMovies(){
-    const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";
+  function getAllMovies() {
     let URL;
 
     if (inputSearchMovie === "") {
@@ -58,43 +64,69 @@ function HomePage() {
         setMovies(data.results);
       })
       .catch((error) => console.error(error));
-  
   }
-
-  useEffect(()=>{
-    getAllMovies()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[inputSearchMovie, noPage])
-
+  console.log(movies);
+  useEffect(() => {
+    getAllMovies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputSearchMovie, noPage]);
+  console.log(API_KEY);
   return (
     <div>
-      <div>
-        <input type="text" value={searchMovie} onChange={handleSearchMovie} />
+      <div className="p-4 m-4 flex justify-center">
+        <Box className="flex justify-center items-center gap-4 rounded-2xl bg-black bg-opacity-10 w-[100%] p-4">
+          <LocalMoviesIcon className="scale-150" />
+          <TextField
+            id="input-with-sx"
+            label="Search Movie"
+            variant="standard"
+            value={searchMovie}
+            onChange={handleSearchMovie}
+          />
+        </Box>
       </div>
-     
-      <div>
+      <div className="w-[100%]">
+        <Upcoming />
+      </div>
+
+      <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
         {movies.map((movie) => {
           return (
-            <div key={movie.id}>
-              <h1>{movie.original_title}</h1>
-              <p>{movie.overview}</p>
-              <img
-                src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                alt=""
-                width={150}
-              />
+            <div
+              key={movie.id}
+              className="w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
+            >
+              <Link className="text-black" to={`/movie/${movie.id}`}>
+                <img
+                  src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                  alt=""
+                  className="w-[100%]"
+                />
+
+                <div>
+                  <h2 className="h-[30%] text-[100%] font-bold">
+                    {movie.original_title}
+                  </h2>
+                </div>
+                <div>
+                  <p className="text-[80%]">{movie.release_date}</p>
+                </div>
+                <div className="absolute bottom-1 right-1">
+                  <BookmarkBorderIcon />
+                </div>
+              </Link>
             </div>
           );
         })}
-        <div>
-        <button onClick={nextPage}>next Page</button>
-      </div>
-      <div>
-        <button onClick={previousPage}>previous page</button>
-      </div>
-      </div>
-      <div>
-        <Upcoming />
+        <div className="flex items-center gap-4">
+          <button onClick={previousPage} className="">
+            <KeyboardArrowLeftIcon />
+          </button>
+          <h3>{noPage}</h3>
+          <button onClick={nextPage} className="">
+            <KeyboardArrowRightIcon />
+          </button>
+        </div>
       </div>
     </div>
   );
