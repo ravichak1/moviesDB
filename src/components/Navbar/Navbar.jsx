@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Navbar() {
   return (
     <header className="flex justify-between items-center">
-      <h1>Passtime</h1>
+      <h1>Pop Corn Time</h1>
       <nav>
         <ul className="flex gap-[10px]">
           <li>

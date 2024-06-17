@@ -17,11 +17,11 @@ function HomePage() {
   const [noPage, setNoPage] = useState(1);
   function nextPage(event) {
     event.preventDefault();
-    console.log("hello");
+    
 
     setNoPage((prevPage) => {
       const newNoPage = prevPage + 1;
-      console.log(newNoPage);
+      
       return newNoPage;
     });
   }
@@ -71,6 +71,7 @@ function HomePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSearchMovie, noPage]);
   console.log(API_KEY);
+  console.log(noPage)
   return (
     <div>
       <div className="p-4 m-4 flex justify-center">
@@ -96,7 +97,7 @@ function HomePage() {
               key={movie.id}
               className="w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
             >
-              <Link className="text-black" to={`/movie/${movie.id}`}>
+              <Link className="text-black" to={`/movie/${movie.id}`} noPage={noPage}>
                 <img
                   src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                   alt=""
@@ -118,15 +119,15 @@ function HomePage() {
             </div>
           );
         })}
-        <div className="flex items-center gap-4">
-          <button onClick={previousPage} className="">
-            <KeyboardArrowLeftIcon />
-          </button>
-          <h3>{noPage}</h3>
-          <button onClick={nextPage} className="">
-            <KeyboardArrowRightIcon />
-          </button>
-        </div>
+       <div className="flex items-center gap-4">
+        <button onClick={previousPage} className="">
+          <KeyboardArrowLeftIcon />
+        </button>
+        <h3>{noPage}</h3>
+        <button onClick={nextPage} className="">
+          <KeyboardArrowRightIcon />
+        </button>
+      </div>
       </div>
     </div>
   );

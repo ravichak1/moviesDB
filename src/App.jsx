@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import HomePage from "./Pages/HomePage";
 import MoviePage from "./Pages/MoviePage";
+import GenrePage from "./Pages/GenrePage";
 function App() {
   const [noPage, setNoPage] = useState(1);
   function nextPage(event) {
@@ -28,11 +29,9 @@ function App() {
       });
     }
   }
-
-
+  console.log(noPage);
 
   const [movies, setMovies] = useState([]);
- 
 
   useEffect(() => {
     function getAllMovies() {
@@ -41,7 +40,6 @@ function App() {
       axios
         .get(URL)
         .then((response) => {
-        
           const data = response.data;
           setMovies(data.results);
         })
@@ -50,14 +48,16 @@ function App() {
 
     getAllMovies();
   }, []); // Add noPage as a dependency
-
+  console.log(noPage);
   return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path='/movie/:movieId' element={<MoviePage movies={movies}/>}/>
+        <Route path="/movie/:movieId" element={<MoviePage  />} />
+        <Route path="/genre/:genre" element={<GenrePage/>} />
       </Routes>
+      
     </>
   );
 }
