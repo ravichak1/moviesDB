@@ -14,8 +14,8 @@ function FavoritesPage() {
       .then((response) => {
         const data = response.data;
         setMovies(data);
-        console.log(response.data)
-        console.log(data)
+        console.log(response.data);
+        console.log(data);
       })
       .catch((error) => console.error(error));
   }
@@ -54,15 +54,6 @@ function FavoritesPage() {
                   <p className="text-[80%]">{movie.release_date}</p>
                 </div>
               </Link>
-              <div className="absolute bottom-1 right-1">
-                <button
-                  onClick={() => {
-                    addFavourites(movie);
-                  }}
-                >
-                  <BookmarkBorderIcon className="" />
-                </button>
-              </div>
             </div>
           );
         })}
