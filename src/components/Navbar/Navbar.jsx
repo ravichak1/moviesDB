@@ -29,7 +29,7 @@ function Navbar() {
                 <Link to={"/genre/crime"}>Crime</Link>
               </li>
               <li>
-                <Link to={"/genre/documentation"}>Documentation</Link>
+                <Link to={"/genre/documentry"}>Documentry</Link>
               </li>
               <li>
                 <Link to={"/genre/drama"}>Drama</Link>
