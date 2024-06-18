@@ -13,7 +13,7 @@ const genreIdMap = {
     animation: 16,
     comedy: 35,
     crime: 80,
-    documentry: 99,
+    documentary: 99,
     drama: 18,
     family: 10751,
     fantasy: 14,
@@ -71,7 +71,7 @@ function GenrePage() {
     }
 
     getAllMovies();
-  }, [noPage]); // Add noPage as a dependency
+  }, [noPage, genre]); // Add noPage as a dependency
   console.log(movies);
   console.log(movies);
   return (
