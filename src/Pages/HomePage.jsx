@@ -30,13 +30,14 @@ function HomePage() {
     });
   }
 
-  function addFavourites(event) {
-    event.preventDefault();
+  function addFavourites(movie) {
     const favouritesObj = {
-      movieId,
+      movieId: movie.id,
       moviesImg: movie.poster_path,
       title: movie.original_title,
     };
+
+
     axios
       .post(`${BE_URL}favorites`, favouritesObj)
       .then((res) => {
@@ -44,8 +45,10 @@ function HomePage() {
         console.log(res.data);
       })
       .catch((error) => console.log(error));
-  }
 
+    
+  }
+  console.log(favourites)
   function previousPage(event) {
     event.preventDefault();
     if (noPage > 1) {
@@ -136,12 +139,16 @@ function HomePage() {
                 <div>
                   <p className="text-[80%]">{movie.release_date}</p>
                 </div>
-                <div className="absolute bottom-1 right-1">
-                  <button onClick={addFavourites}>
-                    <BookmarkBorderIcon className="" />
-                  </button>
-                </div>
               </Link>
+              <div className="absolute bottom-1 right-1">
+                <button
+                  onClick={() => {
+                    addFavourites(movie);
+                  }}
+                >
+                  <BookmarkBorderIcon className="" />
+                </button>
+              </div>
             </div>
           );
         })}

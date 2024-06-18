@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import HomePage from "./Pages/HomePage";
 import MoviePage from "./Pages/MoviePage";
 import GenrePage from "./Pages/GenrePage";
+import FavoritesPage from "./Pages/FavoritesPage";
 function App() {
   const [noPage, setNoPage] = useState(1);
   function nextPage(event) {
@@ -54,10 +55,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/movie/:movieId" element={<MoviePage  />} />
+        <Route path="/movie/:movieId" element={<MoviePage />} />
         <Route path="/genre/:genre" element={<GenrePage />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
       </Routes>
-      
     </>
   );
 }
