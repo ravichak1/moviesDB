@@ -13,7 +13,7 @@ const genreIdMap = {
     animation: 16,
     comedy: 35,
     crime: 80,
-    documentary: 99,
+    documentry: 99,
     drama: 18,
     family: 10751,
     fantasy: 14,

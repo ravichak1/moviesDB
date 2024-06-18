@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Comments from "../components/Comments/Comments";
 
-const COMMENTS_URL = "http://localhost:5005/comments";
+const COMMENTS_URL = "https://moviesbackend-y9t9.onrender.com/";
 function MoviePage() {
   const params = useParams();
   const id = Number(params.movieId);
@@ -17,7 +17,7 @@ function MoviePage() {
   useEffect(() => {
     function getAllComments() {
       axios
-        .get(`${COMMENTS_URL}`)
+        .get(`${COMMENTS_URL}comments`)
         .then((res) => {
           console.log(res.data);
           setComment(res.data);

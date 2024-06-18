@@ -10,20 +10,40 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/ChevronRight";
 import TextField from "@mui/material/TextField";
 import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
+
+const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
+
 function HomePage() {
   const [movies, setMovies] = useState([]);
   const [searchMovie, setSearchMovie] = useState("");
   const [inputSearchMovie, setInputSearchmovie] = useState(searchMovie);
   const [noPage, setNoPage] = useState(1);
+
+  const [favourites, setFavourites] = useState([]);
   function nextPage(event) {
     event.preventDefault();
-    
 
     setNoPage((prevPage) => {
       const newNoPage = prevPage + 1;
-      
+
       return newNoPage;
     });
+  }
+
+  function addFavourites(event) {
+    event.preventDefault();
+    const favouritesObj = {
+      movieId,
+      moviesImg: movie.poster_path,
+      title: movie.original_title,
+    };
+    axios
+      .post(`${BE_URL}favorites`, favouritesObj)
+      .then((res) => {
+        setFavourites(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
   }
 
   function previousPage(event) {
@@ -71,7 +91,7 @@ function HomePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSearchMovie, noPage]);
   console.log(API_KEY);
-  console.log(noPage)
+  console.log(noPage);
   return (
     <div>
       <div className="p-4 m-4 flex justify-center">
@@ -97,7 +117,11 @@ function HomePage() {
               key={movie.id}
               className="w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
             >
-              <Link className="text-black" to={`/movie/${movie.id}`} noPage={noPage}>
+              <Link
+                className="text-black"
+                to={`/movie/${movie.id}`}
+                noPage={noPage}
+              >
                 <img
                   src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                   alt=""
@@ -113,21 +137,23 @@ function HomePage() {
                   <p className="text-[80%]">{movie.release_date}</p>
                 </div>
                 <div className="absolute bottom-1 right-1">
-                  <BookmarkBorderIcon />
+                  <button onClick={addFavourites}>
+                    <BookmarkBorderIcon className="" />
+                  </button>
                 </div>
               </Link>
             </div>
           );
         })}
-       <div className="flex items-center gap-4">
-        <button onClick={previousPage} className="">
-          <KeyboardArrowLeftIcon />
-        </button>
-        <h3>{noPage}</h3>
-        <button onClick={nextPage} className="">
-          <KeyboardArrowRightIcon />
-        </button>
-      </div>
+        <div className="flex items-center gap-4">
+          <button onClick={previousPage} className="">
+            <KeyboardArrowLeftIcon />
+          </button>
+          <h3>{noPage}</h3>
+          <button onClick={nextPage} className="">
+            <KeyboardArrowRightIcon />
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 import { useEffect, useState } from "react";
-const COMMENTS_URL = "http://localhost:5005/comments";
+const COMMENTS_URL = "https://moviesbackend-y9t9.onrender.com/";
 function Comments({ movieId }) {
   const [comment, setComment] = useState("");
 
@@ -17,8 +17,9 @@ function Comments({ movieId }) {
       movieId,
       comment,
     };
+    
     axios
-      .post(`${COMMENTS_URL}`, request)
+      .post(`${COMMENTS_URL}comments`, request)
       .then((res) => {
         setComment(res.data);
         console.log(res.data);

@@ -11,61 +11,61 @@ function Navbar() {
           </li>
           <li className="group">
             Genre
-            <ul className="w-[30%] hidden group-hover:flex flex-wrap gap-4 absolute bg-black text-red-500">
+            <ul className="w-[30%]flex flex-wrap gap-4  bg-black text-red-500">
               <li>
-                <Link to={"/genre/action"}>Action</Link>
+                <Link to={"/genre/action"} >Action</Link>
               </li>
 
               <li>
-                <Link to={"/genre/adventure"}>Adventure</Link>
+                <Link to={"/genre/adventure"} >Adventure</Link>
               </li>
               <li>
-                <Link to={"/genre/animation"}>Animation</Link>
+                <Link to={"/genre/animation"} >Animation</Link>
               </li>
               <li>
-                <Link to={"/genre/comedy"}>Comedy</Link>
+                <Link to={"/genre/comedy"} >Comedy</Link>
               </li>
               <li>
-                <Link to={"/genre/crime"}>Crime</Link>
+                <Link to={"/genre/crime"} >Crime</Link>
               </li>
               <li>
-                <Link to={"/genre/documentry"}>Documentry</Link>
+                <Link to={"/genre/documentry"} >Documentry</Link>
               </li>
               <li>
-                <Link to={"/genre/drama"}>Drama</Link>
+                <Link to={"/genre/drama"} >Drama</Link>
               </li>
               <li>
-                <Link to={"/genre/family"}>Family</Link>
+                <Link to={"/genre/family"} >Family</Link>
               </li>
               <li>
-                <Link to={"/genre/fantasy"}>Fantasy</Link>
+                <Link to={"/genre/fantasy"} >Fantasy</Link>
               </li>
               <li>
-                <Link to={"/genre/history"}>History</Link>
+                <Link to={"/genre/history"} >History</Link>
               </li>
               <li>
-                <Link to={"/genre/horror"}>Horror</Link>
+                <Link to={"/genre/horror"} >Horror</Link>
               </li>
               <li>
-                <Link to={"/genre/mystery"}>Mystery</Link>
+                <Link to={"/genre/mystery"} >Mystery</Link>
               </li>
               <li>
-                <Link to={"/genre/romance"}>Romance</Link>
+                <Link to={"/genre/romance"} >Romance</Link>
               </li>
               <li>
-                <Link to={"/genre/fiction"}>Science Fiction</Link>
+                <Link to={"/genre/fiction"} >Science Fiction</Link>
               </li>
               <li>
-                <Link to={"/genre/thriller"}>Thriller</Link>
+                <Link to={"/genre/thriller"} >Thriller</Link>
               </li>
               <li>
-                <Link to={"/genre/tvmovie"}>TV Movie</Link>
+                <Link to={"/genre/tvmovie"} >TV Movie</Link>
               </li>
               <li>
-                <Link to={"/genre/war"}>War</Link>
+                <Link to={"/genre/war"} >War</Link>
               </li>
               <li>
-                <Link to={"/genre/western"}>Western</Link>
+                <Link to={"/genre/western"} >Western</Link>
               </li>
             </ul>
           </li>
