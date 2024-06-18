@@ -32,7 +32,7 @@ const genreIdMap = {
 function GenrePage() {
   const { genre } = useParams();
   console.log(genre);
-  const genreId = genreIdMap[genre.toLowerCase()]
+  const genreId = genreIdMap[genre]
   const [movies, setMovies] = useState([]);
   const [noPage, setNoPage] = useState(1);
   function nextPage(event) {
