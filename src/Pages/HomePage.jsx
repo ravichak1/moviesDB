@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { API_KEY } from "../const";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Upcoming from "../components/Upcoming/Upcoming";
 import Box from "@mui/material/Box";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -37,7 +39,6 @@ function HomePage() {
       title: movie.original_title,
     };
 
-
     axios
       .post(`${BE_URL}favorites`, favouritesObj)
       .then((res) => {
@@ -45,10 +46,8 @@ function HomePage() {
         console.log(res.data);
       })
       .catch((error) => console.log(error));
-
-    
   }
-  console.log(favourites)
+  console.log(favourites);
   function previousPage(event) {
     event.preventDefault();
     if (noPage > 1) {
@@ -146,7 +145,7 @@ function HomePage() {
                     addFavourites(movie);
                   }}
                 >
-                  <BookmarkBorderIcon className="" />
+                  <FontAwesomeIcon icon={faHeart} className="" />
                 </button>
               </div>
             </div>
