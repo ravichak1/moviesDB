@@ -12,6 +12,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/ChevronRight";
 import TextField from "@mui/material/TextField";
 import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
+import { Skeleton } from "@mui/material";
 
 const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
 
@@ -20,8 +21,9 @@ function HomePage() {
   const [searchMovie, setSearchMovie] = useState("");
   const [inputSearchMovie, setInputSearchmovie] = useState(searchMovie);
   const [noPage, setNoPage] = useState(1);
-
+  const [toggle, setToggle] = useState(false);
   const [favourites, setFavourites] = useState([]);
+
   function nextPage(event) {
     event.preventDefault();
 
@@ -42,7 +44,7 @@ function HomePage() {
     axios
       .post(`${BE_URL}favorites`, favouritesObj)
       .then((res) => {
-        setFavourites(res.data);
+        setFavourites([res.data,...favourites]);
         console.log(res.data);
       })
       .catch((error) => console.log(error));
@@ -115,6 +117,7 @@ function HomePage() {
       <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
         {movies.map((movie) => {
           return (
+            
             <div
               key={movie.id}
               className="w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
@@ -124,29 +127,40 @@ function HomePage() {
                 to={`/movie/${movie.id}`}
                 noPage={noPage}
               >
-                <img
+                {
+                  movie.poster_path ? (
+                    <img
                   src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                   alt=""
                   className="w-[100%]"
                 />
+                  ):(
+                    <Skeleton variant="rectangular" width={200} height={100}/>
+                  )
+                  
+                }
+                
 
                 <div>
                   <h2 className="h-[30%] text-[100%] font-bold">
-                    {movie.original_title}
+                    {movie.original_title  || <Skeleton />}
                   </h2>
                 </div>
                 <div>
-                  <p className="text-[80%]">{movie.release_date}</p>
+                  <p className="text-[80%]">{movie.release_date || <Skeleton />}</p>
                 </div>
               </Link>
               <div className="absolute bottom-1 right-1">
-                <button
+                <Link
                   onClick={() => {
+                    
                     addFavourites(movie);
+                    
                   }}
                 >
-                  <FontAwesomeIcon icon={faHeart} className="" />
-                </button>
+                 {favourites.find(each=> each.title === movie.original_title)? <FontAwesomeIcon icon={faHeart} className="text-red-500"/> : <FontAwesomeIcon icon={faHeart}/>}
+                  
+                </Link>
               </div>
             </div>
           );

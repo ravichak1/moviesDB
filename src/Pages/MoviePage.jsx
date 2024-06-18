@@ -13,7 +13,7 @@ function MoviePage() {
   const [movie, setMovies] = useState();
 
   const [comment, setComment] = useState([]);
-
+  
   useEffect(() => {
     function getAllComments() {
       axios
@@ -26,7 +26,7 @@ function MoviePage() {
     }
 
     getAllComments();
-  }, []);
+  }, [comment]);
   useEffect(() => {
     function getAllMovies() {
       const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";
@@ -46,7 +46,7 @@ function MoviePage() {
   return (
     <div>
       {movie ? (
-        <>
+        <div key={movie.id}>
           <h1>{movie.original_title}</h1>
           <p>{movie.overview}</p>
           <p>Release Date: {movie.release_date}</p>
@@ -60,7 +60,7 @@ function MoviePage() {
             })}
           </div>
           <Comments movieId={movie.id} />
-        </>
+        </div>
       ) : (
         <p>Loading...</p>
       )}

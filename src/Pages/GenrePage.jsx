@@ -1,38 +1,40 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/ChevronRight";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
 const genreIdMap = {
-    action: 28,
-    adventure: 12,
-    animation: 16,
-    comedy: 35,
-    crime: 80,
-    documentary: 99,
-    drama: 18,
-    family: 10751,
-    fantasy: 14,
-    history: 36,
-    horror: 27,
-    music: 10402,
-    mystery: 9648,
-    romance: 10749,
-    sciencefiction: 878,
-    tvmovie: 10770,
-    thriller: 53,
-    war: 10752,
-    western: 37,
-  };
-  
+  action: 28,
+  adventure: 12,
+  animation: 16,
+  comedy: 35,
+  crime: 80,
+  documentary: 99,
+  drama: 18,
+  family: 10751,
+  fantasy: 14,
+  history: 36,
+  horror: 27,
+  music: 10402,
+  mystery: 9648,
+  romance: 10749,
+  sciencefiction: 878,
+  tvmovie: 10770,
+  thriller: 53,
+  war: 10752,
+  western: 37,
+};
+
 function GenrePage() {
   const { genre } = useParams();
   console.log(genre);
-  const genreId = genreIdMap[genre]
+  const genreId = genreIdMap[genre];
   const [movies, setMovies] = useState([]);
   const [noPage, setNoPage] = useState(1);
   function nextPage(event) {
@@ -44,7 +46,22 @@ function GenrePage() {
       return newNoPage;
     });
   }
-  console.log(genreId)
+  console.log(genreId);
+  function addFavourites(movie) {
+    const favouritesObj = {
+      movieId: movie.id,
+      moviesImg: movie.poster_path,
+      title: movie.original_title,
+    };
+
+    axios
+      .post(`${BE_URL}favorites`, favouritesObj)
+      .then((res) => {
+        setFavourites(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  }
   function previousPage(event) {
     event.preventDefault();
     if (noPage > 1) {
@@ -55,7 +72,7 @@ function GenrePage() {
       });
     }
   }
-  console.log(genreId)
+  console.log(genreId);
   useEffect(() => {
     function getAllMovies() {
       const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";
@@ -83,11 +100,7 @@ function GenrePage() {
               key={movie.id}
               className="w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
             >
-              <Link
-                className="text-black"
-                to={`/movie/${movie.id}`}
-                
-              >
+              <Link className="text-black" to={`/movie/${movie.id}`}>
                 <img
                   src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                   alt=""
@@ -103,7 +116,12 @@ function GenrePage() {
                   <p className="text-[80%]">{movie.release_date}</p>
                 </div>
                 <div className="absolute bottom-1 right-1">
-                  <BookmarkBorderIcon />
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    onClick={() => {
+                      addFavourites(movie);
+                    }}
+                  />
                 </div>
               </Link>
             </div>

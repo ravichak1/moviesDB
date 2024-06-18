@@ -7,7 +7,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 const COMMENTS_URL = "https://moviesbackend-y9t9.onrender.com/";
 function Comments({ movieId }) {
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
 
   const handleComment = (e) => setComment(e.target.value);
   console.log(movieId);
@@ -21,7 +21,7 @@ function Comments({ movieId }) {
     axios
       .post(`${COMMENTS_URL}comments`, request)
       .then((res) => {
-        setComment(res.data);
+        setComment(res.data,...comment);
         console.log(res.data);
       })
       .catch((error) => console.log(error));
