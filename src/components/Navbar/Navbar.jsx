@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,18 +38,22 @@ function Navbar() {
           </li>
           <li>
             <Link onClick={() => setIsOpen((prev) => !prev)}>Genre</Link>
-            <div className="flex flex-col absolute bg-black text-white">
+            <div className="flex flex-col absolute bg-red-900  text-black h-[250px] overflow-y-auto">
               {isOpen &&
                 genreList.map((each) => {
+                  
                   return (
-                    <Link to={`/genre/${each.toLocaleLowerCase().replace(/ +/g, "")}`}>{each}</Link>
+                   
+                    <Link to={`/genre/${each.toLocaleLowerCase().replace(/ +/g, "")}`} className="hover:bg-black hover:text-red-900 pt-1 px-4">{each}</Link>
+                    
                   );
+              
                 })}
             </div>
           </li>
           <li>
             <Link to={"/"} >
-              Country
+              Watch List
             </Link>
           </li>
           <li>
