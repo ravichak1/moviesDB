@@ -1,53 +1,46 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import SendIcon from "@mui/icons-material/Send";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 const COMMENTS_URL = "https://moviesbackend-y9t9.onrender.com/";
-function Comments({ movieId }) {
-  const [comment, setComment] = useState("");
 
-  const handleComment = (e) => setComment(e.target.value);
+const Comments = ({ movieId, onAddComment }) => {
+  const [newComment, setNewComment] = useState("");
 
-  function handleCommentSubmit(event) {
-    event.preventDefault();
-    const request = {
-      movieId,
-      comment,
-    };
+  const handleAddComment = () => {
+    if (newComment.trim()) {
+      const commentData = {
+        movieId: movieId,
+        comment: newComment,
+      };
 
-    axios
-      .post(`${COMMENTS_URL}comments`, request)
-      .then((res) => {
-        setComment("");
-      })
-      .catch((error) => console.log(error));
-  }
-
-
+      axios
+        .post(`${COMMENTS_URL}comments`, commentData)
+        .then((response) => {
+          onAddComment(response.data); // Call the callback function with the new comment
+          setNewComment(""); // Clear the input
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   return (
-    <div className="mt-2 w-[100%]">
-      <form onSubmit={handleCommentSubmit} className="">
-        <Box className="flex gap-4 items-center  w-[100%] rounded">
-          <TextField
-            fullWidth
-            label="Write your Comments"
-            id="fullWidth"
-            value={comment}
-            onChange={handleComment}
-            required
-            className=""
-          />
-          <button type="submit" className="bg-black hover:border-red-900"><SendIcon className="text-red-900 font-extrabold"/></button>
-          
-        </Box>
-      </form>
+    <div className="mt-4 flex w-[100%] gap-2 items-center">
+      <textarea
+        value={newComment}
+        onChange={(e) => setNewComment(e.target.value)}
+        className="w-full p-2 rounded"
+        placeholder="Write your comment"
+        required
+      ></textarea>
+      <button
+        onClick={handleAddComment}
+        className="bg-red-900 text-white p-2 rounded mt-2 border-0"
+      >
+        <FontAwesomeIcon icon={faPaperPlane} size='2x'/>
+      </button>
     </div>
   );
-}
+};
 
 export default Comments;

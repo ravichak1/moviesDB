@@ -1,25 +1,23 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Comments from "../components/Comments/Comments";
-
 import ReactPlayer from "react-player";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+
 const COMMENTS_URL = "https://moviesbackend-y9t9.onrender.com/";
+
 function MoviePage() {
   const params = useParams();
   const id = Number(params.movieId);
-  const [movie, setMovies] = useState();
+  const [movie, setMovies] = useState(null);
   const [comment, setComment] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [videoId, setVideoId] = useState();
- 
 
-  
   function togglePopUp() {
     setIsOpen(!isOpen);
   }
@@ -45,15 +43,14 @@ function MoviePage() {
       axios
         .get(URL)
         .then((response) => {
-          const data = response.data;
           setMovies(response.data);
         })
         .catch((error) => console.log(error));
     }
 
     getAllMovies();
-  }, [comment]); // Add noPage as a dependency
-  console.log(comment);
+  }, [id]);
+
   useEffect(() => {
     function getMoviesVideo() {
       const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";
@@ -63,21 +60,27 @@ function MoviePage() {
         .get(URL)
         .then((response) => {
           const data = response.data.results;
-          const videoId = data[0].key;
-          setVideoId(videoId);
-          console.log(videoId);
+          if (data.length > 0) {
+            setVideoId(data[0].key);
+          }
         })
         .catch((error) => console.log(error));
     }
+
     getMoviesVideo();
-  }, []);
+  }, [id]);
+
+  const handleAddComment = (newComment) => {
+    setComment((prevComments) => [...prevComments, newComment]);
+  };
 
   console.log(movie);
+
   return (
     <div className="">
       {movie ? (
         <div key={movie.id} className="flex mt-12 rounded py-8 bg-red-900">
-          <div className="w-[50%] ">
+          <div className="w-[50%]">
             <img
               src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
               alt=""
@@ -87,19 +90,20 @@ function MoviePage() {
               icon={faCirclePlay}
               onClick={togglePopUp}
               size="3x"
-              className="mt-4 flex justify-center w-[100%] "
-            /><p className="text-black text-xl font-bold">Here you can Watch the Trailer</p>
+              className="mt-4 flex justify-center w-[100%]"
+            />
+            <p className="text-black text-xl font-bold">Here you can Watch the Trailer</p>
             {isOpen && (
               <div className="absolute w-[100%] h-[100%] top-0 left-0 bg-black bg-opacity-50">
                 <FontAwesomeIcon
                   icon={faCircleXmark}
-                  className=" z-10 absolute text-red-900 top-[10%] right-[10%] hover:text-white"
+                  className="z-10 absolute text-red-900 top-[10%] right-[10%] hover:text-white"
                   size="3x"
                   onClick={togglePopUp}
                 />
                 <ReactPlayer
                   url={`https://www.youtube.com/watch?v=${videoId}`}
-                  className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-black bg-opacity-10 "
+                  className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-black bg-opacity-10"
                 />
               </div>
             )}
@@ -119,27 +123,25 @@ function MoviePage() {
             <h4 className="mt-2">Comments</h4>
 
             <div className="w-[100%] bg-black flex flex-col gap-2 p-2 rounded h-[200px] overflow-y-auto">
-              {comment.map((each) => {
-                if (each.movieId === id) {
-                  return (
-                    <div className="flex gap-2 items-center ">
-                      <p className="bg-red-900 w-[100%] py-1 px-4 text-black rounded text-start">
-                        {each.comment}
-                      </p>
-                      <FontAwesomeIcon
-                        icon={faCircleXmark}
-                        className="text-red-900 hover:text-white"
-                        size="2x"
-                        onClick={() => {
-                          console.log(comment);
-                        }}
-                      />
-                    </div>
-                  );
-                }
-              })}
+              {comment
+                .filter((each) => each.movieId === id)
+                .map((each) => (
+                  <div key={each.id} className="flex gap-2 items-center">
+                    <p className="bg-red-900 w-[100%] py-1 px-4 text-black rounded text-start">
+                      {each.comment}
+                    </p>
+                    <FontAwesomeIcon
+                      icon={faCircleXmark}
+                      className="text-red-900 hover:text-white"
+                      size="2x"
+                      onClick={() => {
+                        console.log(comment);
+                      }}
+                    />
+                  </div>
+                ))}
             </div>
-            <Comments movieId={movie.id} />
+            <Comments movieId={movie.id} onAddComment={handleAddComment} />
           </div>
         </div>
       ) : (
