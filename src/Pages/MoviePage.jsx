@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Comments from "../components/Comments/Comments";
 import Popup from "reactjs-popup";
 import YouTube from "react-youtube";
-import ReactPlayer from "react-player"
+import ReactPlayer from "react-player";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
@@ -81,15 +81,28 @@ function MoviePage() {
               alt=""
               className="w-[70%] aspect-square mx-auto"
             />
-            <FontAwesomeIcon icon={faCirclePlay} onClick={togglePopUp} size="3x" className="mt-4 flex justify-center w-[100%] " />
+            <FontAwesomeIcon
+              icon={faCirclePlay}
+              onClick={togglePopUp}
+              size="3x"
+              className="mt-4 flex justify-center w-[100%] "
+            />
             {isOpen && (
               <div className="absolute w-[100%] h-[100%] top-0 left-0 bg-black bg-opacity-50">
-                <FontAwesomeIcon icon={faCircleXmark} className=" z-10 absolute text-red-900 top-[10%] right-[10%] hover:text-white" size="3x" onClick={togglePopUp}/>
-                <ReactPlayer url={`https://www.youtube.com/watch?v=${videoId}`} className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-black bg-opacity-10 "/>
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className=" z-10 absolute text-red-900 top-[10%] right-[10%] hover:text-white"
+                  size="3x"
+                  onClick={togglePopUp}
+                />
+                <ReactPlayer
+                  url={`https://www.youtube.com/watch?v=${videoId}`}
+                  className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-black bg-opacity-10 "
+                />
               </div>
             )}
           </div>
-          <div className="w-[50%] text-black flex flex-col items-start">
+          <div className="w-[50%] text-black flex flex-col items-start pr-4">
             <h1 className="mb-4 font-bold">{movie.original_title}</h1>
             <p className="text-start p-4 font-semibold">{movie.overview}</p>
             <div className="flex gap-4">
@@ -107,9 +120,12 @@ function MoviePage() {
               {comment.map((each) => {
                 if (each.movieId === id) {
                   return (
-                    <p className="bg-red-900 w-[100%] py-1 px-4 text-black rounded text-start">
-                      {each.comment}
-                    </p>
+                    <div className="flex gap-2 items-center">
+                      <p className="bg-red-900 w-[100%] py-1 px-4 text-black rounded text-start">
+                        {each.comment}
+                      </p>
+                      <FontAwesomeIcon icon={faCircleXmark} className="text-red-900" size="2x" />
+                    </div>
                   );
                 }
               })}
