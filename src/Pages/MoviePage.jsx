@@ -13,15 +13,17 @@ const COMMENTS_URL = "https://moviesbackend-y9t9.onrender.com/";
 function MoviePage() {
   const params = useParams();
   const id = Number(params.movieId);
-
   const [movie, setMovies] = useState();
-
   const [comment, setComment] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [videoId, setVideoId] = useState();
+ 
+
+  
   function togglePopUp() {
     setIsOpen(!isOpen);
   }
+
   useEffect(() => {
     function getAllComments() {
       axios
@@ -34,7 +36,7 @@ function MoviePage() {
     }
 
     getAllComments();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     function getAllMovies() {
@@ -51,7 +53,7 @@ function MoviePage() {
 
     getAllMovies();
   }, [comment]); // Add noPage as a dependency
-
+  console.log(comment);
   useEffect(() => {
     function getMoviesVideo() {
       const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";
@@ -69,6 +71,7 @@ function MoviePage() {
     }
     getMoviesVideo();
   }, []);
+
   console.log(movie);
   return (
     <div className="">
@@ -85,7 +88,7 @@ function MoviePage() {
               onClick={togglePopUp}
               size="3x"
               className="mt-4 flex justify-center w-[100%] "
-            />
+            /><p className="text-black text-xl font-bold">Here you can Watch the Trailer</p>
             {isOpen && (
               <div className="absolute w-[100%] h-[100%] top-0 left-0 bg-black bg-opacity-50">
                 <FontAwesomeIcon
@@ -115,15 +118,22 @@ function MoviePage() {
 
             <h4 className="mt-2">Comments</h4>
 
-            <div className="w-[100%] bg-black flex flex-col gap-2 p-2 rounded">
+            <div className="w-[100%] bg-black flex flex-col gap-2 p-2 rounded h-[200px] overflow-y-auto">
               {comment.map((each) => {
                 if (each.movieId === id) {
                   return (
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center ">
                       <p className="bg-red-900 w-[100%] py-1 px-4 text-black rounded text-start">
                         {each.comment}
                       </p>
-                      <FontAwesomeIcon icon={faCircleXmark} className="text-red-900" size="2x" />
+                      <FontAwesomeIcon
+                        icon={faCircleXmark}
+                        className="text-red-900 hover:text-white"
+                        size="2x"
+                        onClick={() => {
+                          console.log(comment);
+                        }}
+                      />
                     </div>
                   );
                 }

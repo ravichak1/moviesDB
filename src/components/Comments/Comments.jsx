@@ -26,7 +26,9 @@ function Comments({ movieId }) {
       })
       .catch((error) => console.log(error));
   }
-  console.log(comment);
+
+
+
   return (
     <div className="mt-2 w-[100%]">
       <form onSubmit={handleCommentSubmit} className="">
