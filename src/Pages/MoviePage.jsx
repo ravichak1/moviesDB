@@ -17,7 +17,7 @@ function MoviePage() {
   const [comment, setComment] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [videoId, setVideoId] = useState();
-
+  const [genres, setGenres] = useState([]);
   function togglePopUp() {
     setIsOpen(!isOpen);
   }
@@ -44,6 +44,7 @@ function MoviePage() {
         .get(URL)
         .then((response) => {
           setMovies(response.data);
+          setGenres(response.data.genres);
         })
         .catch((error) => console.log(error));
     }
@@ -75,7 +76,9 @@ function MoviePage() {
   };
 
   console.log(movie);
+  console.log(genres);
 
+ 
   return (
     <div className="">
       {movie ? (
@@ -92,7 +95,9 @@ function MoviePage() {
               size="3x"
               className="mt-4 flex justify-center w-[100%]"
             />
-            <p className="text-black text-xl font-bold">Here you can Watch the Trailer</p>
+            <p className="text-black text-xl font-bold">
+              Here you can Watch the Trailer
+            </p>
             {isOpen && (
               <div className="absolute w-[100%] h-[100%] top-0 left-0 bg-black bg-opacity-50">
                 <FontAwesomeIcon
@@ -118,6 +123,23 @@ function MoviePage() {
               <span className="rounded p-2 bg-black text-red-900 font-bold">
                 Rating: {Math.round(movie.vote_average * 10) / 10}
               </span>
+              <span className="rounded p-2 bg-black text-red-900 font-bold">
+                Rating:{" "}
+                {`${Math.floor(movie.runtime / 60)}hrs ${
+                  movie.runtime % 60
+                }mins`}
+              </span>
+            </div>
+            <div className="flex gap-4 mt-4">
+              {genres.map((e) => {
+                return (
+                  <>
+                    <span className="rounded p-2 bg-black text-red-900 font-bold">
+                      {e.name}
+                    </span>
+                  </>
+                );
+              })}
             </div>
 
             <h4 className="mt-2">Comments</h4>
@@ -134,9 +156,7 @@ function MoviePage() {
                       icon={faCircleXmark}
                       className="text-red-900 hover:text-white"
                       size="2x"
-                      onClick={() => {
-                        console.log(comment);
-                      }}
+                      
                     />
                   </div>
                 ))}
