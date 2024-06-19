@@ -1,11 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { API_KEY } from "../const";
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Comments from "../components/Comments/Comments";
-import Popup from "reactjs-popup";
-import YouTube from "react-youtube";
+
 import ReactPlayer from "react-player";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
