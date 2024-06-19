@@ -10,7 +10,7 @@ function Comments({ movieId }) {
   const [comment, setComment] = useState('');
 
   const handleComment = (e) => setComment(e.target.value);
-  console.log(movieId);
+
   function handleCommentSubmit(event) {
     event.preventDefault();
     const request = {
@@ -21,11 +21,12 @@ function Comments({ movieId }) {
     axios
       .post(`${COMMENTS_URL}comments`, request)
       .then((res) => {
-        setComment(res.data,...comment);
-        console.log(res.data);
+        setComment("");
+
       })
       .catch((error) => console.log(error));
   }
+ 
   return (
     <div>
       <h3>Comments</h3>

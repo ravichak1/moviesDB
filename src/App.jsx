@@ -51,7 +51,7 @@ function App() {
   }, []); // Add noPage as a dependency
   console.log(noPage);
   return (
-    <>
+    <div className="">
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -59,7 +59,7 @@ function App() {
         <Route path="/genre/:genre" element={<GenrePage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

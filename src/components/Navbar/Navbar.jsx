@@ -25,12 +25,12 @@ function Navbar() {
     "Western",
   ];
   return (
-    <header className="z-10 bg-white flex justify-between items-center fixed top-0 w-[98%] right-0 p-[1rem] mx-auto">
+    <header className="z-10 bg-black text-red-900 flex justify-between items-center fixed top-0 w-[100%] left-0 py-[1rem] px-[2%]">
       <h1 className="text-[150%] font-bold">Pop Corn Time</h1>
       <nav>
-        <ul className="flex gap-[10px]">
+        <ul className="flex gap-[10px] text-2xl">
           <li>
-            <Link to={"/"} className="text-black">
+            <Link to={"/"} >
               {" "}
               Home{" "}
             </Link>
@@ -47,17 +47,17 @@ function Navbar() {
             </div>
           </li>
           <li>
-            <Link to={"/"} className="text-black">
+            <Link to={"/"} >
               Country
             </Link>
           </li>
           <li>
-            <Link to={"/favorites"} className="text-black">
+            <Link to={"/favorites"} >
               Favourite Movies
             </Link>
           </li>
           <li>
-            <Link to={"/"} className="text-black">
+            <Link to={"/"} >
               Top IMDB
             </Link>
           </li>

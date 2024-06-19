@@ -22,8 +22,8 @@ function Upcoming() {
   }, []);
   return (
     <div className="flex flex-col gap-4 mb-12">
-      <h3>Upcoming Movies</h3>
-      <div className="flex gap-1 bg-black p-4 bg-opacity-10 rounded-xl"> 
+      <h3 className="font-bold text-[2rem] text-red-900">Upcoming Movies</h3>
+      <div className="w-[100%] flex gap-2 bg-red-900 p-4  rounded-xl"> 
         {movies.map((movie) => {
           return (
             <div key={movie.id} className="w-[20%] flex">
