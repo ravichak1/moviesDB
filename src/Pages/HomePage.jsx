@@ -141,7 +141,7 @@ function HomePage() {
           />
         </Box>
       </div>
-      <div className="w-[100%] h-[200px]">
+      <div className="w-[100%] h-[100%] mx-auto mb-8">
         <Upcoming />
       </div>
       <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
