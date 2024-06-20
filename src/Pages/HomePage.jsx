@@ -3,15 +3,22 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_KEY } from "../const";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faFilm, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faFilm,
+  faAngleLeft,
+  faAngleRight,
+} from "@fortawesome/free-solid-svg-icons";
 import Upcoming from "../components/Upcoming/Upcoming";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
+import { Skeleton, Typography, Stack } from "@mui/material";
+
 const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
 
 function HomePage() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(null);
   const [searchMovie, setSearchMovie] = useState("");
   const [inputSearchMovie, setInputSearchmovie] = useState(searchMovie);
   const [noPage, setNoPage] = useState(1);
@@ -39,7 +46,8 @@ function HomePage() {
       title: movie.original_title,
     };
 
-    axios.post(`${BE_URL}favorites`, favouritesObj)
+    axios
+      .post(`${BE_URL}favorites`, favouritesObj)
       .then((res) => {
         setFavourites([res.data, ...favourites]);
       })
@@ -65,7 +73,8 @@ function HomePage() {
       URL = `https://api.themoviedb.org/3/search/movie?query=${inputSearchMovie}&api_key=${API_KEY}`;
     }
 
-    axios.get(URL)
+    axios
+      .get(URL)
       .then((response) => {
         setMovies(response.data.results);
       })
@@ -73,11 +82,14 @@ function HomePage() {
   };
 
   useEffect(() => {
-    getAllMovies();
+    // setTimeout(() => {
+      getAllMovies();
+    // }, 1000);
   }, [inputSearchMovie, noPage]);
 
   const getAllFavMovies = () => {
-    axios.get(`${BE_URL}favorites`)
+    axios
+      .get(`${BE_URL}favorites`)
       .then((response) => {
         setAllFavourites(response.data);
       })
@@ -90,7 +102,18 @@ function HomePage() {
 
   return (
     <div className="my-[3%] sm:my-[10%] min-h-[80vh]">
-      <div className="p-4 m-4 flex justify-center text-red-900">
+      {!movies && (
+        <Stack spacing={1}>
+          {/* For variant="text", adjust the height via font-size */}
+          <Skeleton variant="text" sx={{ fontSize: "1rem", backgroundColor:"white" }} />
+
+          {/* For other variants, adjust the size with `width` and `height` */}
+          <Skeleton variant="circular" width={40} height={40} sx={{ backgroundColor:"white" }}/>
+          <Skeleton variant="rectangular" width={210} height={60} sx={{ backgroundColor:"white" }}/>
+          <Skeleton variant="rounded" width={210} height={60} sx={{ backgroundColor:"white" }}/>
+        </Stack>
+      )}
+      {/* <div className="p-4 m-4 flex justify-center text-red-900">
         <Box className="flex items-center gap-4 rounded-full bg-white py-[2%] px-[3%] md:w-[50%] h-[4rem] justify-center sm:w-[100%]">
           <FontAwesomeIcon icon={faFilm} size="2x" />
           <TextField
@@ -104,47 +127,65 @@ function HomePage() {
       </div>
       <div className="w-[100%]">
         <Upcoming />
-      </div>
+      </div> */}
       <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
-        {movies.map((movie) => (
-          <div
-            key={movie.id}
-            className="md:w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative sm:w-[70%]"
-          >
-            <Link className="text-black" to={`/movie/${movie.id}`} noPage={noPage}>
-              <img
-                src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                alt=""
-                className="md:w-[100%] sm:w-[60%] sm:mx-auto"
-              />
-              <div>
-                <h2 className="h-[30%] text-[120%] font-bold text-red-900">
-                  {movie.original_title}
-                </h2>
+        {movies &&
+          movies.map((movie) => (
+            <div
+              key={movie.id}
+              className="md:w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative sm:w-[70%]"
+            >
+              <Link
+                className="text-black"
+                to={`/movie/${movie.id}`}
+                noPage={noPage}
+              >
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                    alt=""
+                    className="md:w-[100%] sm:w-[60%] sm:mx-auto"
+                  />
+                
+                <div>
+                    <h2 className="h-[30%] text-[120%] font-bold text-red-900">
+                      {movie.original_title}
+                    </h2>
+                </div>
+                <div>
+                  <p className="text-[80%] text-red-900 font-bold">
+                    Released Date: {movie.release_date}
+                  </p>
+                </div>
+              </Link>
+              <div className="flex justify-end mt-4">
+                <button
+                  disabled={allFavourites.find(
+                    (each) => each.movieId === movie.id
+                  )}
+                  onClick={() => addFavourites(movie)}
+                  className="bg-black border-0 hover:border-2 hover:border-red-900 group"
+                >
+                  {allFavourites.find(
+                    (each) => each.title === movie.original_title
+                  ) ? (
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      className="text-red-500"
+                      size="2x"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      size="2x"
+                      className="group-hover:text-red-300"
+                    />
+                  )}
+                </button>
               </div>
-              <div>
-                <p className="text-[80%] text-red-900 font-bold">
-                  Released Date: {movie.release_date}
-                </p>
-              </div>
-            </Link>
-            <div className="flex justify-end mt-4">
-              <button
-                disabled={allFavourites.find((each) => each.movieId === movie.id)}
-                onClick={() => addFavourites(movie)}
-               className="bg-black border-0 hover:border-2 hover:border-red-900 group">
-                {allFavourites.find((each) => each.title === movie.original_title) ? (
-                  <FontAwesomeIcon icon={faHeart} className="text-red-500" size="2x" />
-                ) : (
-                  <FontAwesomeIcon icon={faHeart} size="2x" className="group-hover:text-red-300" />
-                )}
-              </button>
             </div>
-          </div>
-        ))}
-        
-        </div>
-        <div className="flex items-center justify-center gap-4 text-red-900 font-extrabold mt-4">
+          ))}
+      </div>
+      {/* <div className="flex items-center justify-center gap-4 text-red-900 font-extrabold mt-4">
           <Link onClick={previousPage}>
             <FontAwesomeIcon icon={faAngleLeft} size="2xl" />
           </Link>
@@ -152,7 +193,7 @@ function HomePage() {
           <Link onClick={nextPage}>
             <FontAwesomeIcon icon={faAngleRight} size="2xl" />
           </Link>
-      </div>
+      </div> */}
     </div>
   );
 }

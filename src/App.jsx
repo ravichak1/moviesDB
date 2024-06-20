@@ -9,7 +9,8 @@ import GenrePage from "./Pages/GenrePage";
 import FavoritesPage from "./Pages/FavoritesPage";
 import TopImdb from "./Pages/TopImdb";
 import Footer from "./components/Footer/Footer";
-import Skeleton from "./components/Skeleton/Skeleton";
+
+
 function App() {
   const [noPage, setNoPage] = useState(1);
 
@@ -40,7 +41,7 @@ function App() {
         <Route path="/genre/:genre" element={<GenrePage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/topimdb" element={<TopImdb />} />
-        <Route path="/skeleton" element={<Skeleton />}/>
+        
       </Routes>
       <Footer />
     </div>

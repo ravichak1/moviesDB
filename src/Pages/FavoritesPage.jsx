@@ -17,7 +17,7 @@ function FavoritesPage() {
     axios
     .delete(`${BE_URL}favorites/${id}`)
     .then(()=>{
-      navigate('/favorites')
+      getAllMovies()
     }
     ).catch((error)=> console.log(error))
   }
