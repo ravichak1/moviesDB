@@ -101,7 +101,7 @@ function HomePage() {
   }, [favourites]);
 
   return (
-    <div className=" min-h-[80vh]">
+    <div className=" min-h-[80vh] sm:mt-[5%] md:mt-0">
       <div className="p-4 m-4 flex justify-center text-red-900">
         <Box className="flex items-center gap-4 rounded-full bg-white py-[2%] px-[3%] md:w-[50%] h-[4rem] justify-center sm:w-[100%]">
           <FontAwesomeIcon icon={faFilm} size="2x" />
@@ -121,9 +121,12 @@ function HomePage() {
         {!movies && (
           <div className="flex sm:flex-col md:flex-row gap-4">
             {[...Array(4)].map((_, i) => {
-              
               return (
-                <Stack spacing={1} key= {i} className="border-2 p-4 sm:w-[100%] md:w-[50%]">
+                <Stack
+                  spacing={1}
+                  key={i}
+                  className="border-2 p-4 sm:w-[100%] md:w-[50%]"
+                >
                   {/* For variant="text", adjust the height via font-size */}
                   <Skeleton
                     variant="text"
@@ -211,13 +214,13 @@ function HomePage() {
           ))}
       </div>
       <div className="flex items-center justify-center gap-4 text-red-900 font-extrabold mt-4">
-          <Link onClick={previousPage}>
-            <FontAwesomeIcon icon={faAngleLeft} size="2xl" />
-          </Link>
-          <h3 className="text-2xl">{noPage}</h3>
-          <Link onClick={nextPage}>
-            <FontAwesomeIcon icon={faAngleRight} size="2xl" />
-          </Link>
+        <Link onClick={previousPage}>
+          <FontAwesomeIcon icon={faAngleLeft} size="2xl" />
+        </Link>
+        <h3 className="text-2xl">{noPage}</h3>
+        <Link onClick={nextPage}>
+          <FontAwesomeIcon icon={faAngleRight} size="2xl" />
+        </Link>
       </div>
     </div>
   );
