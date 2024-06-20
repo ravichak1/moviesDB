@@ -51,7 +51,7 @@ function MoviePage() {
 
     getAllMovies();
   }, [id]);
-
+  console.log(movie)
   useEffect(() => {
     function getMoviesVideo() {
       const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";

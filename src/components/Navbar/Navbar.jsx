@@ -62,7 +62,7 @@ function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to={"/"} >
+            <Link to={"/topimdb"} >
               Top IMDB
             </Link>
           </li>

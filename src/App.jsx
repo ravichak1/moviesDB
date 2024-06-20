@@ -7,30 +7,10 @@ import HomePage from "./Pages/HomePage";
 import MoviePage from "./Pages/MoviePage";
 import GenrePage from "./Pages/GenrePage";
 import FavoritesPage from "./Pages/FavoritesPage";
+import TopImdb from "./Pages/TopImdb";
 function App() {
   const [noPage, setNoPage] = useState(1);
-  function nextPage(event) {
-    event.preventDefault();
-    console.log("hello");
-
-    setNoPage((prevPage) => {
-      const newNoPage = prevPage + 1;
-      console.log(newNoPage);
-      return newNoPage;
-    });
-  }
-
-  function previousPage(event) {
-    event.preventDefault();
-    if (noPage > 1) {
-      setNoPage((prevPage) => {
-        const newNoPage = prevPage - 1;
-
-        return newNoPage;
-      });
-    }
-  }
-  console.log(noPage);
+  
 
   const [movies, setMovies] = useState([]);
 
@@ -58,6 +38,7 @@ function App() {
         <Route path="/movie/:movieId" element={<MoviePage />} />
         <Route path="/genre/:genre" element={<GenrePage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/topimdb" element={<TopImdb />}/>
       </Routes>
     </div>
   );
