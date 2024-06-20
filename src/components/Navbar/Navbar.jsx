@@ -42,7 +42,7 @@ function Navbar() {
             </li>
             <li className="sm:hover:bg-red-900 sm:hover:text-black rounded relative">
               <Link onClick={() => setIsOpen((prev) => !prev)} className="px-2">Genre</Link>
-              <div className="flex flex-col absolute bg-red-900  text-black h-[250px] overflow-y-auto sm:left-[50%] sm:translate-x-[-50%]">
+              <div className="flex flex-col absolute bg-red-900  text-black h-[250px] overflow-y-auto sm:left-[50%] sm:translate-x-[-50%] scrollbar-thin scrollbar-track-red-900">
                 {isOpen &&
                   genreList.map((each) => {
                     return (
