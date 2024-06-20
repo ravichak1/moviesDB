@@ -43,19 +43,19 @@ function FavoritesPage() {
   }, []);
   console.log(movies)
   return (
-    <div className="my-[3%] min-h-[80vh]">
-      <h1 className="my-[10%] text-4xl text-red-900">FavoritesPage</h1>
-      <div className="flex flex-wrap gap-4">
+    <div className=" min-h-[80vh]">
+      <h1 className="my-[5%] text-4xl text-red-900">FavoritesPage</h1>
+      <div className="flex md:flex-row md:flex-wrap gap-4 sm:flex-col" >
         {movies.map((movie) => {
           return (
             <div
               key={movie.id}
-              className="w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
+              className="sm:w-[90%] md:w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
             >
-              <div><FontAwesomeIcon icon={faCircleXmark} onClick={()=>{
+              <div className="absolute right-[10%] top-[5%]"><FontAwesomeIcon icon={faCircleXmark} size="2x" onClick={()=>{
                 console.log(movie.id)
                 deleteFav(movie.id)
-              }} className="text-red-900"/></div>
+              }} className="text-red-900 hover:text-red-500"/></div>
               <Link
                 className="text-black"
                 to={`/movie/${movie.movieId}`}
