@@ -87,7 +87,7 @@ function MoviePage() {
             <img
               src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
               alt=""
-              className="w-[70%] aspect-square mx-auto"
+              className="md:w-[70%] aspect-square mx-auto sm:w-[90%]"
             />
             <FontAwesomeIcon
               icon={faCirclePlay}

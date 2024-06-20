@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faFilm, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-
+import { Skeleton, Typography, Stack } from "@mui/material";
 const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
 function TopImdb() {
   const [movies, setMovies] = useState([]);
@@ -83,6 +83,7 @@ console.log(movies)
   return (
     <div className="my-[3%] sm:my-[10%] min-h-[80vh]">
       <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
+      
         {sortedMovies.map((movie) => (
           <div
             key={movie.id}
