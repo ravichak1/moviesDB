@@ -33,8 +33,8 @@ function Navbar() {
       <h1 className="text-[150%] font-bold">Pop Corn Time</h1>
 
       <nav>
-        <section className="md:block">
-          <ul className="flex gap-[10px] text-2xl sm:flex-col sm:absolute sm:right-0 sm:top-[100%] sm:bg-black sm:p-4 sm:w-[100%] md:flex-row sm:mb-[5%] md:relative">
+        <section className="md:block md:justify-end">
+          <ul className="flex gap-[10px] text-xl sm:flex-col sm:absolute sm:right-0 sm:top-[100%] sm:bg-black sm:p-4 sm:w-[100%] md:flex-row sm:mb-[5%] md:relative">
             <li className="sm:hover:bg-red-900 sm:hover:text-black md:hover:bg-none">
               <Link to={"/"} className="">
                 {" "}
@@ -71,7 +71,7 @@ function Navbar() {
           </ul>
         </section>
       </nav>
-      <div>
+      
         <button
           className="sm:block md:hidden lg:hidden xl:hidden 2xl:hidden"
           onClick={(e) => {
@@ -95,7 +95,7 @@ function Navbar() {
         >
           <FontAwesomeIcon icon={faBars} size="2x" className="" />
         </button>
-      </div>
+      
     </header>
   );
 }

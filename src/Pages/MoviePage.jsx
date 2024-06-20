@@ -80,10 +80,10 @@ function MoviePage() {
 
  
   return (
-    <div className="my-[3%]">
+    <div className="my-[3%] sm:my-[10%]">
       {movie ? (
-        <div key={movie.id} className="flex mt-12 rounded py-8 bg-red-900">
-          <div className="w-[50%]">
+        <div key={movie.id} className="flex mt-12 rounded py-8 bg-red-900 sm:flex-col md:flex-row">
+          <div className="md:w-[50%] sm:w-[100%]">
             <img
               src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
               alt=""
@@ -99,7 +99,7 @@ function MoviePage() {
               Here you can Watch the Trailer
             </p>
             {isOpen && (
-              <div className="absolute w-[100%] h-[100%] top-0 left-0 bg-black bg-opacity-50">
+              <div className="z-10 absolute w-[100%] h-[100%] top-0 left-0 bg-black bg-opacity-50">
                 <FontAwesomeIcon
                   icon={faCircleXmark}
                   className="z-10 absolute text-red-900 top-[10%] right-[10%] hover:text-white"
@@ -107,17 +107,20 @@ function MoviePage() {
                   onClick={togglePopUp}
                 />
                 <ReactPlayer
+                height="50%"
+                width="70%"
+                controls = {false}
                   url={`https://www.youtube.com/watch?v=${videoId}`}
                   className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-black bg-opacity-10"
                 />
               </div>
             )}
           </div>
-          <div className="w-[50%] text-black flex flex-col items-start pr-4">
+          <div className="md:w-[50%] text-black flex flex-col items-start pr-4 sm:mt-[5%]">
             <h1 className="mb-4 font-bold text-2xl">{movie.original_title}</h1>
             <p className="text-start p-4 font-semibold">{movie.overview}</p>
-            <div className="flex gap-4">
-              <span className="rounded p-2 bg-black text-red-900 font-bold">
+            <div className="flex gap-4 sm:flex-col sm:items-center sm:w-[100%] md:flex-row">
+              <span className="rounded p-2 bg-black text-red-900 font-bold ">
                 Release Date: {movie.release_date}
               </span>
               <span className="rounded p-2 bg-black text-red-900 font-bold">
@@ -130,7 +133,7 @@ function MoviePage() {
                 }mins`}
               </span>
             </div>
-            <div className="flex gap-4 mt-4">
+            <div className="flex gap-4 mt-4 sm:flex-col sm:items-center sm:w-[100%] md:flex-row">
               {genres.map((e) => {
                 return (
                   <>
@@ -144,7 +147,7 @@ function MoviePage() {
 
             <h4 className="mt-2">Comments</h4>
 
-            <div className="w-[100%] bg-black flex flex-col gap-2 p-2 rounded h-[200px] overflow-y-auto">
+            <div className="w-[90%] mx-auto bg-black flex flex-col gap-2 p-2 rounded h-[200px] overflow-y-auto">
               {comment
                 .filter((each) => each.movieId === id)
                 .map((each) => (

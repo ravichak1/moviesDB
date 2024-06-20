@@ -91,7 +91,7 @@ function HomePage() {
   return (
     <div className="my-[3%] sm:my-[10%]">
       <div className="p-4 m-4 flex justify-center text-red-900">
-        <Box className="flex items-center gap-4 rounded-full bg-white py-[2%] px-[3%] w-[50%] h-[4rem] justify-center">
+        <Box className="flex items-center gap-4 rounded-full bg-white py-[2%] px-[3%] md:w-[50%] h-[4rem] justify-center sm:w-[100%]">
           <FontAwesomeIcon icon={faFilm} size="2x" />
           <TextField
             label="Search Movie"
@@ -109,13 +109,13 @@ function HomePage() {
         {movies.map((movie) => (
           <div
             key={movie.id}
-            className="w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
+            className="md:w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative sm:w-[70%]"
           >
             <Link className="text-black" to={`/movie/${movie.id}`} noPage={noPage}>
               <img
                 src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                 alt=""
-                className="w-[100%]"
+                className="md:w-[100%] sm:w-[60%] sm:mx-auto"
               />
               <div>
                 <h2 className="h-[30%] text-[120%] font-bold text-red-900">
@@ -142,7 +142,9 @@ function HomePage() {
             </div>
           </div>
         ))}
-        <div className="flex items-center gap-4 text-red-900 font-extrabold mt-4">
+        
+        </div>
+        <div className="flex items-center justify-center gap-4 text-red-900 font-extrabold mt-4">
           <Link onClick={previousPage}>
             <FontAwesomeIcon icon={faAngleLeft} size="2xl" />
           </Link>
@@ -150,7 +152,6 @@ function HomePage() {
           <Link onClick={nextPage}>
             <FontAwesomeIcon icon={faAngleRight} size="2xl" />
           </Link>
-        </div>
       </div>
     </div>
   );

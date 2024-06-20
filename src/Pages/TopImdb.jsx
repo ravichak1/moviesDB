@@ -81,12 +81,12 @@ console.log(movies)
   }, [movies]);
 
   return (
-    <div className="my-[3%]">
+    <div className="my-[3%] sm:my-[10%]">
       <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
         {sortedMovies.map((movie) => (
           <div
             key={movie.id}
-            className="w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
+            className="sm:w-[70%] md:w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
           >
             <Link
               className="text-black"
@@ -96,7 +96,7 @@ console.log(movies)
               <img
                 src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                 alt=""
-                className="w-[100%]"
+                className="md:w-[100%] sm:w-[60%] sm:mx-auto"
               />
               <div>
                 <h2 className="h-[30%] text-[120%] font-bold text-red-900">
@@ -136,7 +136,9 @@ console.log(movies)
             </div>
           </div>
         ))}
-        <div className="flex items-center gap-4 text-red-900 font-extrabold mt-4">
+        
+      </div>
+      <div className="flex items-center justify-center gap-4 text-red-900 font-extrabold mt-4">
           <Link onClick={previousPage}>
             <FontAwesomeIcon icon={faAngleLeft} size="2xl" />
           </Link>
@@ -145,7 +147,6 @@ console.log(movies)
             <FontAwesomeIcon icon={faAngleRight} size="2xl" />
           </Link>
         </div>
-      </div>
     </div>
   );
 }
