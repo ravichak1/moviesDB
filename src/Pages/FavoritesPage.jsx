@@ -1,18 +1,30 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
+
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
 function FavoritesPage() {
   const [movies, setMovies] = useState([]);
   const [noPage, setNoPage] = useState(1);
+  const navigate = useNavigate()
+ let id;
+  function deleteFav(id){
+    axios
+    .delete(`${BE_URL}favorites/${id}`)
+    .then(()=>{
+      navigate('/favorites')
+    }
+    ).catch((error)=> console.log(error))
+  }
 
-
-
+  useEffect(()=>{
+    deleteFav(id);
+  },[id])
   function getAllMovies() {
     axios
       .get(`${BE_URL}favorites`)
@@ -40,12 +52,16 @@ function FavoritesPage() {
               key={movie.id}
               className="w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
             >
-              <div><FontAwesomeIcon icon={faCircleXmark} /></div>
+              <div><FontAwesomeIcon icon={faCircleXmark} onClick={()=>{
+                console.log(movie.id)
+                deleteFav(movie.id)
+              }} className="text-red-900"/></div>
               <Link
                 className="text-black"
                 to={`/movie/${movie.movieId}`}
                 noPage={noPage}
               >
+                
                 <img
                   src={`https://image.tmdb.org/t/p/original/${movie.moviesImg}`}
                   alt=""
