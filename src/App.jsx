@@ -8,9 +8,9 @@ import MoviePage from "./Pages/MoviePage";
 import GenrePage from "./Pages/GenrePage";
 import FavoritesPage from "./Pages/FavoritesPage";
 import TopImdb from "./Pages/TopImdb";
+import Footer from "./components/Footer/Footer";
 function App() {
   const [noPage, setNoPage] = useState(1);
-  
 
   const [movies, setMovies] = useState([]);
 
@@ -31,15 +31,16 @@ function App() {
   }, []); // Add noPage as a dependency
   console.log(noPage);
   return (
-    <div className="">
+    <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/movie/:movieId" element={<MoviePage />} />
         <Route path="/genre/:genre" element={<GenrePage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
-        <Route path="/topimdb" element={<TopImdb />}/>
+        <Route path="/topimdb" element={<TopImdb />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

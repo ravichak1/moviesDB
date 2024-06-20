@@ -80,7 +80,7 @@ function MoviePage() {
 
  
   return (
-    <div className="">
+    <div className="my-[3%]">
       {movie ? (
         <div key={movie.id} className="flex mt-12 rounded py-8 bg-red-900">
           <div className="w-[50%]">
@@ -114,7 +114,7 @@ function MoviePage() {
             )}
           </div>
           <div className="w-[50%] text-black flex flex-col items-start pr-4">
-            <h1 className="mb-4 font-bold">{movie.original_title}</h1>
+            <h1 className="mb-4 font-bold text-2xl">{movie.original_title}</h1>
             <p className="text-start p-4 font-semibold">{movie.overview}</p>
             <div className="flex gap-4">
               <span className="rounded p-2 bg-black text-red-900 font-bold">

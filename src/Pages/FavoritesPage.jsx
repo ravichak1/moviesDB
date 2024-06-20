@@ -2,11 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
 function FavoritesPage() {
   const [movies, setMovies] = useState([]);
   const [noPage, setNoPage] = useState(1);
+  
 
   function getAllMovies() {
     axios
@@ -23,10 +26,11 @@ function FavoritesPage() {
   useEffect(() => {
     getAllMovies();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [noPage]);
+  }, []);
+  console.log(movies)
   return (
-    <div>
-      <h1>FavoritesPage</h1>
+    <div className="my-[3%]">
+      <h1 className="my-[10%] text-4xl text-red-900">FavoritesPage</h1>
       <div className="flex flex-wrap gap-4">
         {movies.map((movie) => {
           return (
@@ -34,6 +38,7 @@ function FavoritesPage() {
               key={movie.id}
               className="w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
             >
+              <div><FontAwesomeIcon icon={faCircleXmark} onClick={()=>console.log(movie.movieId)}/></div>
               <Link
                 className="text-black"
                 to={`/movie/${movie.movieId}`}

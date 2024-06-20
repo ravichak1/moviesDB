@@ -78,10 +78,10 @@ console.log(sortedMovies)
 console.log(movies)
   useEffect(() => {
     sortedTMDB();
-  }, [noPage]);
+  }, [movies]);
 
   return (
-    <div>
+    <div className="my-[3%]">
       <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
         {sortedMovies.map((movie) => (
           <div
