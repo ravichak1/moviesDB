@@ -29,20 +29,20 @@ function Navbar() {
   const ul = document.querySelector("section");
   const header = document.querySelector("header");
   return (
-    <header className="z-10 bg-black text-red-900 flex justify-between items-center fixed top-0 w-[100%] left-0 py-[1rem] px-[2%] ">
+    <header className="z-10 bg-black h-[10%] text-red-900 flex justify-between items-center fixed top-0 w-[100%] left-0 py-[1rem] px-[2%] ">
       <h1 className="text-[150%] font-bold">Pop Corn Time</h1>
 
       <nav>
-        <section className="md:block md:justify-end">
-          <ul className="flex gap-[10px] text-xl sm:flex-col sm:absolute sm:right-0 sm:top-[100%] sm:bg-black sm:p-4 sm:w-[100%] md:flex-row sm:mb-[5%] md:relative">
-            <li className="sm:hover:bg-red-900 sm:hover:text-black md:hover:bg-none">
-              <Link to={"/"} className="">
+        <section className="md:block md:justify-end mt-4">
+          <ul className="flex gap-[10px] text-xl sm:flex-col sm:absolute sm:right-0 sm:top-[100%] sm:bg-black sm:p-4 sm:w-[100%] md:flex-row sm:mb-[5%] md:relative ">
+            <li className="sm:hover:bg-red-900 sm:hover:text-black md:hover:bg-none rounded">
+              <Link to={"/"} className="px-2">
                 {" "}
                 Home{" "}
               </Link>
             </li>
-            <li className="sm:hover:bg-red-900 sm:hover:text-black">
-              <Link onClick={() => setIsOpen((prev) => !prev)}>Genre</Link>
+            <li className="sm:hover:bg-red-900 sm:hover:text-black rounded">
+              <Link onClick={() => setIsOpen((prev) => !prev)} className="px-2">Genre</Link>
               <div className="flex flex-col absolute bg-red-900  text-black h-[250px] overflow-y-auto">
                 {isOpen &&
                   genreList.map((each) => {
@@ -59,14 +59,14 @@ function Navbar() {
                   })}
               </div>
             </li>
-            <li className="sm:hover:bg-red-900 sm:hover:text-black">
-              <Link to={"/"}>Watch List</Link>
+            <li className="sm:hover:bg-red-900 sm:hover:text-black rounded">
+              <Link to={"/"} className="px-2">Watch List</Link>
             </li>
-            <li className="sm:hover:bg-red-900 sm:hover:text-black">
-              <Link to={"/favorites"}>Favourite Movies</Link>
+            <li className="sm:hover:bg-red-900 sm:hover:text-black rounded">
+              <Link to={"/favorites"} className="px-2">Favourite Movies</Link>
             </li>
-            <li className="sm:hover:bg-red-900 sm:hover:text-black">
-              <Link to={"/topimdb"}>Top IMDB</Link>
+            <li className="sm:hover:bg-red-900 sm:hover:text-black rounded">
+              <Link to={"/topimdb"} className="px-2">Top IMDB</Link>
             </li>
           </ul>
         </section>

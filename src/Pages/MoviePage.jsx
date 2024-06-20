@@ -80,7 +80,7 @@ function MoviePage() {
 
  
   return (
-    <div className="my-[3%] sm:my-[10%]">
+    <div className="my-[3%] sm:my-[10%] min-h-[80vh]">
       {movie ? (
         <div key={movie.id} className="flex mt-12 rounded py-8 bg-red-900 sm:flex-col md:flex-row">
           <div className="md:w-[50%] sm:w-[100%]">

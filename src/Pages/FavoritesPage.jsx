@@ -43,7 +43,7 @@ function FavoritesPage() {
   }, []);
   console.log(movies)
   return (
-    <div className="my-[3%]">
+    <div className="my-[3%] min-h-[80vh]">
       <h1 className="my-[10%] text-4xl text-red-900">FavoritesPage</h1>
       <div className="flex flex-wrap gap-4">
         {movies.map((movie) => {

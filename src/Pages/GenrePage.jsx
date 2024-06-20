@@ -137,7 +137,7 @@ function GenrePage() {
   console.log(movies);
   console.log(movies);
   return (
-    <div className="my-[3%] sm:my-[10%]">
+    <div className="my-[3%] sm:my-[10%] min-h-[80vh]">
       <div className="p-4 m-4 flex justify-center text-red-900">
         <Box className=" flex items-center gap-4 rounded-full bg-white py-[2%] px-[3%] md:w-[50%] h-[4rem] justify-center sm:w-[100%]">
           <FontAwesomeIcon icon={faFilm} className="" size="2x" />

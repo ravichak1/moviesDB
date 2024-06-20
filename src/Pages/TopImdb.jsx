@@ -81,7 +81,7 @@ console.log(movies)
   }, [movies]);
 
   return (
-    <div className="my-[3%] sm:my-[10%]">
+    <div className="my-[3%] sm:my-[10%] min-h-[80vh]">
       <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
         {sortedMovies.map((movie) => (
           <div
