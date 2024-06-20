@@ -66,7 +66,7 @@ function TopImdb() {
 
   useEffect(() => {
     getAllMovies();
-  }, []);
+  }, [noPage]);
   function sortedTMDB() {
     const sortedByTmdb = movies.toSorted((movieA, movieB) => {
       return Number(movieB.vote_average) - Number(movieA.vote_average);
@@ -81,7 +81,7 @@ console.log(movies)
   }, [movies]);
 
   return (
-    <div className="my-[3%] sm:my-[10%] min-h-[80vh]">
+    <div className=" sm:mt-[15%] md:mt-[3%] min-h-[80vh]">
       <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
       
         {sortedMovies.map((movie) => (
