@@ -83,7 +83,7 @@ function HomePage() {
 
   useEffect(() => {
     // setTimeout(() => {
-      getAllMovies();
+    getAllMovies();
     // }, 1000);
   }, [inputSearchMovie, noPage]);
 
@@ -101,19 +101,8 @@ function HomePage() {
   }, [favourites]);
 
   return (
-    <div className="my-[3%] sm:my-[10%] min-h-[80vh]">
-      {!movies && (
-        <Stack spacing={1}>
-          {/* For variant="text", adjust the height via font-size */}
-          <Skeleton variant="text" sx={{ fontSize: "1rem", backgroundColor:"white" }} />
-
-          {/* For other variants, adjust the size with `width` and `height` */}
-          <Skeleton variant="circular" width={40} height={40} sx={{ backgroundColor:"white" }}/>
-          <Skeleton variant="rectangular" width={210} height={60} sx={{ backgroundColor:"white" }}/>
-          <Skeleton variant="rounded" width={210} height={60} sx={{ backgroundColor:"white" }}/>
-        </Stack>
-      )}
-      {/* <div className="p-4 m-4 flex justify-center text-red-900">
+    <div className=" min-h-[80vh]">
+      <div className="p-4 m-4 flex justify-center text-red-900">
         <Box className="flex items-center gap-4 rounded-full bg-white py-[2%] px-[3%] md:w-[50%] h-[4rem] justify-center sm:w-[100%]">
           <FontAwesomeIcon icon={faFilm} size="2x" />
           <TextField
@@ -127,8 +116,44 @@ function HomePage() {
       </div>
       <div className="w-[100%]">
         <Upcoming />
-      </div> */}
+      </div>
       <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
+        {!movies && (
+          <div className="flex sm:flex-col md:flex-row gap-4">
+            {[...Array(4)].map((_, i) => {
+              
+              return (
+                <Stack spacing={1} key= {i} className="border-2 p-4 sm:w-[100%] md:w-[50%]">
+                  {/* For variant="text", adjust the height via font-size */}
+                  <Skeleton
+                    variant="text"
+                    sx={{ fontSize: "1rem", backgroundColor: "#7f1d1d" }}
+                  />
+
+                  {/* For other variants, adjust the size with `width` and `height` */}
+                  <Skeleton
+                    variant="circular"
+                    width={40}
+                    height={40}
+                    sx={{ backgroundColor: "#7f1d1d" }}
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    width={210}
+                    height={60}
+                    sx={{ backgroundColor: "#7f1d1d" }}
+                  />
+                  <Skeleton
+                    variant="rounded"
+                    width={210}
+                    height={60}
+                    sx={{ backgroundColor: "#7f1d1d" }}
+                  />
+                </Stack>
+              );
+            })}
+          </div>
+        )}
         {movies &&
           movies.map((movie) => (
             <div
@@ -140,16 +165,16 @@ function HomePage() {
                 to={`/movie/${movie.id}`}
                 noPage={noPage}
               >
-                  <img
-                    src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                    alt=""
-                    className="md:w-[100%] sm:w-[60%] sm:mx-auto"
-                  />
-                
+                <img
+                  src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                  alt=""
+                  className="md:w-[100%] sm:w-[60%] sm:mx-auto"
+                />
+
                 <div>
-                    <h2 className="h-[30%] text-[120%] font-bold text-red-900">
-                      {movie.original_title}
-                    </h2>
+                  <h2 className="h-[30%] text-[120%] font-bold text-red-900">
+                    {movie.original_title}
+                  </h2>
                 </div>
                 <div>
                   <p className="text-[80%] text-red-900 font-bold">
@@ -157,27 +182,27 @@ function HomePage() {
                   </p>
                 </div>
               </Link>
-              <div className="flex justify-end mt-4">
+              <div className="sm:flex sm:justify-end sm:mt-4 md:absolute md:bottom-[2%] md:right-[5%]">
                 <button
                   disabled={allFavourites.find(
                     (each) => each.movieId === movie.id
                   )}
                   onClick={() => addFavourites(movie)}
-                  className="bg-black border-0 hover:border-2 hover:border-red-900 group"
+                  className="bg-black border-0  group bg-opacity-0"
                 >
                   {allFavourites.find(
                     (each) => each.title === movie.original_title
                   ) ? (
                     <FontAwesomeIcon
                       icon={faHeart}
-                      className="text-red-500"
+                      className="text-red-500 opacity-100"
                       size="2x"
                     />
                   ) : (
                     <FontAwesomeIcon
                       icon={faHeart}
                       size="2x"
-                      className="group-hover:text-red-300"
+                      className="group-hover:text-red-300 opacity-100"
                     />
                   )}
                 </button>
@@ -185,7 +210,7 @@ function HomePage() {
             </div>
           ))}
       </div>
-      {/* <div className="flex items-center justify-center gap-4 text-red-900 font-extrabold mt-4">
+      <div className="flex items-center justify-center gap-4 text-red-900 font-extrabold mt-4">
           <Link onClick={previousPage}>
             <FontAwesomeIcon icon={faAngleLeft} size="2xl" />
           </Link>
@@ -193,7 +218,7 @@ function HomePage() {
           <Link onClick={nextPage}>
             <FontAwesomeIcon icon={faAngleRight} size="2xl" />
           </Link>
-      </div> */}
+      </div>
     </div>
   );
 }

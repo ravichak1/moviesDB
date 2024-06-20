@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [hamBurger,setHamBurger] = useState (false)
   const genreList = [
     "Action",
     "Adventure",
@@ -26,14 +26,13 @@ function Navbar() {
     "War",
     "Western",
   ];
-  const ul = document.querySelector("section");
-  const header = document.querySelector("header");
+
   return (
     <header className="z-10 bg-black h-[10%] text-red-900 flex justify-between items-center fixed top-0 w-[100%] left-0 py-[1rem] px-[2%] ">
       <h1 className="text-[150%] font-bold">Pop Corn Time</h1>
 
       <nav>
-        <section className="md:block md:justify-end mt-4">
+        <section className={`md:block md:justify-end mt-4 ${hamBurger ? 'sm:block' : 'sm:hidden'}`}>
           <ul className="flex gap-[10px] text-xl sm:flex-col sm:absolute sm:right-0 sm:top-[100%] sm:bg-black sm:p-4 sm:w-[100%] md:flex-row sm:mb-[5%] md:relative ">
             <li className="sm:hover:bg-red-900 sm:hover:text-black md:hover:bg-none rounded">
               <Link to={"/"} className="px-2">
@@ -76,21 +75,11 @@ function Navbar() {
           className="sm:block md:hidden lg:hidden xl:hidden 2xl:hidden"
           onClick={(e) => {
             e.preventDefault();
-            if (e.currentTarget.name === "menu") {
-              e.currentTarget.name = "close";
-              ul.classList.add("sm:block");
-
-              ul.classList.remove("sm:hidden");
-              // header.classList.add("mb-[45%]");
-              console.log("hello");
-            } else if (e.currentTarget.name === "close") {
-              e.currentTarget.name = "menu";
-              ul.classList.add("sm:hidden");
-              ul.classList.remove("sm:flex");
-
-              // header.classList.remove("mb-[45%]");
+            setHamBurger(isYes => !isYes)
+            console.log(hamBurger)
+            
             }
-          }}
+          }
           name="menu"
         >
           <FontAwesomeIcon icon={faBars} size="2x" className="" />
