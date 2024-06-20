@@ -7,9 +7,9 @@ import ReactPlayer from "react-player";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
-
+import { API_KEY } from "../const";
 const COMMENTS_URL = "https://moviesbackend-y9t9.onrender.com/";
-
+const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
 function MoviePage() {
   const params = useParams();
   const id = Number(params.movieId);
@@ -18,27 +18,39 @@ function MoviePage() {
   const [isOpen, setIsOpen] = useState(false);
   const [videoId, setVideoId] = useState();
   const [genres, setGenres] = useState([]);
+  let newId;
   function togglePopUp() {
     setIsOpen(!isOpen);
   }
-
+  function getAllComments() {
+    axios
+      .get(`${COMMENTS_URL}comments`)
+      .then((res) => {
+        console.log(res.data);
+        setComment(res.data);
+      })
+      .catch((error) => console.log(error));
+  }
   useEffect(() => {
-    function getAllComments() {
-      axios
-        .get(`${COMMENTS_URL}comments`)
-        .then((res) => {
-          console.log(res.data);
-          setComment(res.data);
-        })
-        .catch((error) => console.log(error));
-    }
-
     getAllComments();
   }, [id]);
 
+  function deleteComment(newId) {
+    axios
+      .delete(`${BE_URL}comments/${newId}`)
+      .then(() => {
+        getAllComments();
+      })
+      .catch((error) => console.log(error));
+  }
+
+  useEffect(() => {
+    deleteComment(id);
+  }, [newId]);
+
   useEffect(() => {
     function getAllMovies() {
-      const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";
+      // const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";
       const URL = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`;
       axios
         .get(URL)
@@ -51,10 +63,10 @@ function MoviePage() {
 
     getAllMovies();
   }, [id]);
-  console.log(movie)
+  console.log(movie);
   useEffect(() => {
     function getMoviesVideo() {
-      const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";
+      // const API_KEY = "71b8999b4e573d85fb4f770b5ee1650e";
       const URL = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`;
 
       axios
@@ -78,11 +90,13 @@ function MoviePage() {
   console.log(movie);
   console.log(genres);
 
- 
   return (
-    <div className="my-[3%] sm:my-[10%] min-h-[80vh]">
+    <div className="md:my-[0] sm:my-[10%] min-h-[80vh]">
       {movie ? (
-        <div key={movie.id} className="flex mt-12 rounded py-8 bg-red-900 sm:flex-col md:flex-row">
+        <div
+          key={movie.id}
+          className="flex mt-12 rounded py-8 bg-red-900 sm:flex-col md:flex-row"
+        >
           <div className="md:w-[50%] sm:w-[100%]">
             <img
               src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
@@ -107,9 +121,9 @@ function MoviePage() {
                   onClick={togglePopUp}
                 />
                 <ReactPlayer
-                height="50%"
-                width="70%"
-                controls = {false}
+                  height="50%"
+                  width="70%"
+                  controls={false}
                   url={`https://www.youtube.com/watch?v=${videoId}`}
                   className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-black bg-opacity-10"
                 />
@@ -159,7 +173,10 @@ function MoviePage() {
                       icon={faCircleXmark}
                       className="text-red-900 hover:text-white"
                       size="2x"
-                      
+                      onClick={() => {
+                        console.log(each.id);
+                        deleteComment(each.id);
+                      }}
                     />
                   </div>
                 ))}
