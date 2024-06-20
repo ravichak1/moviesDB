@@ -4,8 +4,14 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faFilm, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { Skeleton, Typography, Stack } from "@mui/material";
+import {
+  faHeart,
+  faFilm,
+  faAngleLeft,
+  faAngleRight,
+  faCirclePlus,
+} from "@fortawesome/free-solid-svg-icons";
+
 const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
 function TopImdb() {
   const [movies, setMovies] = useState([]);
@@ -13,6 +19,9 @@ function TopImdb() {
   const [sortedMovies, setSortedMovies] = useState([]);
   const [favourites, setFavourites] = useState([]);
   const [allFavourites, setAllFavourites] = useState([]);
+  const [watchList, setWatchList] = useState([]);
+  const [allWatchList, setAllWatchList] = useState([]);
+
   const nextPage = (event) => {
     event.preventDefault();
     setNoPage((prevPage) => prevPage + 1);
@@ -32,22 +41,50 @@ function TopImdb() {
       title: movie.original_title,
     };
 
-    axios.post(`${BE_URL}favorites`, favouritesObj)
+    axios
+      .post(`${BE_URL}favorites`, favouritesObj)
       .then((res) => {
         setFavourites([res.data, ...favourites]);
       })
       .catch((error) => console.log(error));
   };
-  
-
 
   const getAllFavMovies = () => {
-    axios.get(`${BE_URL}favorites`)
+    axios
+      .get(`${BE_URL}favorites`)
       .then((response) => {
         setAllFavourites(response.data);
       })
       .catch((error) => console.error(error));
   };
+
+  const addwatchList = (movie) => {
+    const watchlistObj = {
+      movieId: movie.id,
+      moviesImg: movie.poster_path,
+      title: movie.original_title,
+    };
+
+    axios
+      .post(`${BE_URL}watchlist`, watchlistObj)
+      .then((res) => {
+        setWatchList([res.data, ...watchList]);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const getAllwatchList = () => {
+    axios
+      .get(`${BE_URL}watchlist`)
+      .then((response) => {
+        setAllWatchList(response.data);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    getAllwatchList();
+  }, [watchList]);
 
   useEffect(() => {
     getAllFavMovies();
@@ -67,6 +104,7 @@ function TopImdb() {
   useEffect(() => {
     getAllMovies();
   }, [noPage]);
+
   function sortedTMDB() {
     const sortedByTmdb = movies.toSorted((movieA, movieB) => {
       return Number(movieB.vote_average) - Number(movieA.vote_average);
@@ -74,8 +112,7 @@ function TopImdb() {
     setSortedMovies(sortedByTmdb);
     console.log(sortedByTmdb);
   }
-console.log(sortedMovies)
-console.log(movies)
+
   useEffect(() => {
     sortedTMDB();
   }, [movies]);
@@ -83,7 +120,6 @@ console.log(movies)
   return (
     <div className=" sm:mt-[15%] md:mt-[3%] min-h-[80vh]">
       <div className="flex flex-wrap gap-[1rem] justify-center w-[100%]">
-      
         {sortedMovies.map((movie) => (
           <div
             key={movie.id}
@@ -110,44 +146,66 @@ console.log(movies)
                 </p>
               </div>
             </Link>
-            <div className="flex justify-end mt-4">
-              <button
-                disabled={allFavourites.find(
-                  (each) => each.movieId === movie.id
-                )}
-                onClick={() => addFavourites(movie)}
-                className="bg-black border-0 hover:border-2 hover:border-red-900 group"
-              >
-                {allFavourites.find(
-                  (each) => each.title === movie.original_title
-                ) ? (
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    className="text-red-500"
-                    size="2x"
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    size="2x"
-                    className="group-hover:text-red-300"
-                  />
-                )}
-              </button>
-            </div>
+            <div className="sm:flex sm:justify-between sm:mt-4 ">
+                <button
+                  disabled={allWatchList.find(
+                    (e) => e.movieId === movie.id
+                  )}
+                  onClick={() => addwatchList(movie)}
+                  className="bg-black border-0  group bg-opacity-0 md:absolute md:bottom-[2%]"
+                >
+                  {allWatchList.find(
+                    (e) => e.title === movie.original_title
+                  ) ? (
+                    <FontAwesomeIcon
+                      icon={faCirclePlus}
+                      className="text-red-500 opacity-100"
+                      size="2x"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faCirclePlus}
+                      size="2x"
+                      className="group-hover:text-red-300 opacity-100"
+                    />
+                  )}
+                </button>
+                <button
+                  disabled={allFavourites.find(
+                    (each) => each.movieId === movie.id
+                  )}
+                  onClick={() => addFavourites(movie)}
+                  className="bg-black border-0  group bg-opacity-0 md:absolute md:right-[2%] md:bottom-[2%]"
+                >
+                  {allFavourites.find(
+                    (each) => each.title === movie.original_title
+                  ) ? (
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      className="text-red-500 opacity-100"
+                      size="2x"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      size="2x"
+                      className="group-hover:text-red-300 opacity-100"
+                    />
+                  )}
+                </button>
+              </div>
           </div>
         ))}
-        
       </div>
       <div className="flex items-center justify-center gap-4 text-red-900 font-extrabold mt-4">
-          <Link onClick={previousPage}>
-            <FontAwesomeIcon icon={faAngleLeft} size="2xl" />
-          </Link>
-          <h3 className="text-2xl">{noPage}</h3>
-          <Link onClick={nextPage}>
-            <FontAwesomeIcon icon={faAngleRight} size="2xl" />
-          </Link>
-        </div>
+        <Link onClick={previousPage}>
+          <FontAwesomeIcon icon={faAngleLeft} size="2xl" />
+        </Link>
+        <h3 className="text-2xl">{noPage}</h3>
+        <Link onClick={nextPage}>
+          <FontAwesomeIcon icon={faAngleRight} size="2xl" />
+        </Link>
+      </div>
     </div>
   );
 }
