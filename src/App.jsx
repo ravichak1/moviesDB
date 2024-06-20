@@ -9,6 +9,7 @@ import GenrePage from "./Pages/GenrePage";
 import FavoritesPage from "./Pages/FavoritesPage";
 import TopImdb from "./Pages/TopImdb";
 import Footer from "./components/Footer/Footer";
+import WatchList from "./Pages/WatchList";
 
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
         <Route path="/genre/:genre" element={<GenrePage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/topimdb" element={<TopImdb />} />
-        
+        <Route path="/watchlist" element={<WatchList/>}/>
       </Routes>
       <Footer />
     </div>

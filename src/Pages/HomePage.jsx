@@ -12,7 +12,7 @@ import {
 import Upcoming from "../components/Upcoming/Upcoming";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { Skeleton, Typography, Stack } from "@mui/material";
 
 const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
@@ -24,7 +24,8 @@ function HomePage() {
   const [noPage, setNoPage] = useState(1);
   const [favourites, setFavourites] = useState([]);
   const [allFavourites, setAllFavourites] = useState([]);
-
+  const [watchList, setWatchList] = useState([])
+  const [allWatchList, setAllWatchList] = useState([])
   const handleSearchMovie = (e) => setSearchMovie(e.target.value);
 
   const nextPage = (event) => {
@@ -54,6 +55,20 @@ function HomePage() {
       .catch((error) => console.log(error));
   };
 
+  const addwatchList = (movie) => {
+    const watchlistObj = {
+      movieId: movie.id,
+      moviesImg: movie.poster_path,
+      title: movie.original_title,
+    };
+
+    axios
+      .post(`${BE_URL}watchlist`, watchlistObj)
+      .then((res) => {
+        setFavourites([res.data, ...watchList]);
+      })
+      .catch((error) => console.log(error));
+  };
   useEffect(() => {
     const handler = setTimeout(() => {
       setInputSearchmovie(searchMovie);
@@ -96,10 +111,22 @@ function HomePage() {
       .catch((error) => console.error(error));
   };
 
+  const getAllwatchList = () => {
+    axios
+      .get(`${BE_URL}watchlist`)
+      .then((response) => {
+        setAllWatchList(response.data);
+      })
+      .catch((error) => console.error(error));
+  };
+
   useEffect(() => {
     getAllFavMovies();
   }, [favourites]);
 
+  useEffect(() => {
+    getAllwatchList();
+  }, [watchList]);
   return (
     <div className=" min-h-[80vh] sm:mt-[5%] md:mt-0">
       <div className="p-4 m-4 flex justify-center text-red-900">
@@ -185,7 +212,30 @@ function HomePage() {
                   </p>
                 </div>
               </Link>
-              <div className="sm:flex sm:justify-end sm:mt-4 md:absolute md:bottom-[2%] md:right-[5%]">
+              <div className="sm:flex sm:justify-between sm:mt-4 md:absolute md:bottom-[2%] md:right-[5%]">
+                <button
+                  disabled={allWatchList.find(
+                    (e) => e.movieId === movie.id
+                  )}
+                  onClick={() => addwatchList(movie)}
+                  className="bg-black border-0  group bg-opacity-0"
+                >
+                  {allWatchList.find(
+                    (e) => e.title === movie.original_title
+                  ) ? (
+                    <FontAwesomeIcon
+                      icon={faCirclePlus}
+                      className="text-red-500 opacity-100"
+                      size="2x"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faCirclePlus}
+                      size="2x"
+                      className="group-hover:text-red-300 opacity-100"
+                    />
+                  )}
+                </button>
                 <button
                   disabled={allFavourites.find(
                     (each) => each.movieId === movie.id

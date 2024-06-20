@@ -61,7 +61,7 @@ function Navbar() {
               </div>
             </li>
             <li className="sm:hover:bg-red-900 sm:hover:text-black rounded">
-              <Link to={"/"} className="px-2" onClick={()=>  setHamBurger(isYes => !isYes)}>Watch List</Link>
+              <Link to={"/watchlist"} className="px-2" onClick={()=>  setHamBurger(isYes => !isYes)}>Watch List</Link>
             </li>
             <li className="sm:hover:bg-red-900 sm:hover:text-black rounded">
               <Link to={"/favorites"} className="px-2" onClick={()=>  setHamBurger(isYes => !isYes)}>Favourite Movies</Link>

@@ -8,14 +8,15 @@ import { useParams } from "react-router-dom";
 
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
-function FavoritesPage() {
-  const [movies, setMovies] = useState([]);
+
+function WatchList() {
+    const [movies, setMovies] = useState([]);
   const [noPage, setNoPage] = useState(1);
   
  let id;
   function deleteFav(id){
     axios
-    .delete(`${BE_URL}favorites/${id}`)
+    .delete(`${BE_URL}watchlist/${id}`)
     .then(()=>{
       getAllMovies()
     }
@@ -27,7 +28,7 @@ function FavoritesPage() {
   },[id])
   function getAllMovies() {
     axios
-      .get(`${BE_URL}favorites`)
+      .get(`${BE_URL}watchlist`)
       .then((response) => {
         const data = response.data;
         setMovies(data);
@@ -44,7 +45,7 @@ function FavoritesPage() {
   console.log(movies)
   return (
     <div className="sm:mt-[5%] min-h-[80vh] md:mt-[0]">
-      <h1 className="my-[3%] text-4xl text-red-900">FavoritesPage</h1>
+      <h1 className="my-[3%] text-4xl text-red-900">WatchList</h1>
       <div className="flex md:flex-row md:flex-wrap gap-4 sm:flex-col" >
         {movies.map((movie) => {
           return (
@@ -85,4 +86,4 @@ function FavoritesPage() {
   );
 }
 
-export default FavoritesPage;
+export default WatchList
