@@ -65,7 +65,7 @@ function HomePage() {
     axios
       .post(`${BE_URL}watchlist`, watchlistObj)
       .then((res) => {
-        setFavourites([res.data, ...watchList]);
+        setWatchList([res.data, ...watchList]);
       })
       .catch((error) => console.log(error));
   };
@@ -212,13 +212,13 @@ function HomePage() {
                   </p>
                 </div>
               </Link>
-              <div className="sm:flex sm:justify-between sm:mt-4 md:absolute md:bottom-[2%] md:right-[5%]">
+              <div className="sm:flex sm:justify-between sm:mt-4 ">
                 <button
                   disabled={allWatchList.find(
                     (e) => e.movieId === movie.id
                   )}
                   onClick={() => addwatchList(movie)}
-                  className="bg-black border-0  group bg-opacity-0"
+                  className="bg-black border-0  group bg-opacity-0 md:absolute md:bottom-[2%]"
                 >
                   {allWatchList.find(
                     (e) => e.title === movie.original_title
@@ -241,7 +241,7 @@ function HomePage() {
                     (each) => each.movieId === movie.id
                   )}
                   onClick={() => addFavourites(movie)}
-                  className="bg-black border-0  group bg-opacity-0"
+                  className="bg-black border-0  group bg-opacity-0 md:absolute md:right-[2%] md:bottom-[2%]"
                 >
                   {allFavourites.find(
                     (each) => each.title === movie.original_title
