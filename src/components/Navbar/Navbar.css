@@ -1,0 +1,4 @@
+.overflow-x-auto::-webkit-scrollbar-track, .overflow-y-auto::-webkit-scrollbar-track {
+    background-color: #F7F7F7 !important;
+    border-radius: 2px !important;
+  }

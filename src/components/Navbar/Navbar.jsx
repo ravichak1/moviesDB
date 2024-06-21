@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import "./Navbar.css"
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hamBurger,setHamBurger] = useState (false)
@@ -36,13 +37,13 @@ function Navbar() {
           <ul className="flex gap-[10px] text-xl sm:flex-col sm:absolute sm:right-0 sm:top-[100%] sm:bg-black sm:p-4 sm:w-[100%] md:flex-row sm:mb-[5%] md:relative ">
             <li className="sm:hover:bg-red-900 sm:hover:text-black md:hover:bg-none rounded">
               <Link to={"/"} className="px-2"  onClick={()=>  setHamBurger(isYes => !isYes)}>  
-                {" "}
-                Home{" "}
+                
+                Home
               </Link>
             </li>
             <li className="sm:hover:bg-red-900 sm:hover:text-black rounded relative">
               <Link onClick={() => setIsOpen((prev) => !prev)} className="px-2">Genre</Link>
-              <div className="flex flex-col absolute bg-red-900  text-black h-[250px] overflow-y-auto sm:left-[50%] sm:translate-x-[-50%] scrollbar-thin scrollbar-track-red-900">
+              <div className="flex flex-col absolute bg-red-900  text-black h-[250px] overflow-y-auto scrollbar sm:left-[50%] sm:translate-x-[-50%] scrollbar-thumb-black">
                 {isOpen &&
                   genreList.map((each) => {
                     return (
