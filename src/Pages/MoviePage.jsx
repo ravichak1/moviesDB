@@ -181,7 +181,7 @@ function MoviePage() {
                   </div>
                 ))}
             </div>
-            <Comments movieId={movie.id} onAddComment={handleAddComment} />
+            <Comments movieId={movie.id} onAddComment={handleAddComment}  />
           </div>
         </div>
       ) : (

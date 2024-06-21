@@ -25,11 +25,11 @@ const Comments = ({ movieId, onAddComment }) => {
   };
 
   return (
-    <div className="mt-4 flex w-[100%] gap-2 items-center">
+    <div className="mt-4 flex w-[90%] gap-2 items-center mx-auto">
       <textarea
         value={newComment}
         onChange={(e) => setNewComment(e.target.value)}
-        className="w-full p-2 rounded"
+        className="w-full p-2 rounded bg-white"
         placeholder="Write your comment"
         required
       ></textarea>
