@@ -24,17 +24,19 @@ function HomePage() {
   const [noPage, setNoPage] = useState(1);
   const [favourites, setFavourites] = useState([]);
   const [allFavourites, setAllFavourites] = useState([]);
-  const [watchList, setWatchList] = useState([])
-  const [allWatchList, setAllWatchList] = useState([])
+  const [watchList, setWatchList] = useState([]);
+  const [allWatchList, setAllWatchList] = useState([]);
   const handleSearchMovie = (e) => setSearchMovie(e.target.value);
 
   const nextPage = (event) => {
     event.preventDefault();
+    scrollTo(0, 0, { behavior: "smooth" })
     setNoPage((prevPage) => prevPage + 1);
   };
 
   const previousPage = (event) => {
     event.preventDefault();
+    scrollTo(0, 0, { behavior: "smooth" })
     if (noPage > 1) {
       setNoPage((prevPage) => prevPage - 1);
     }
@@ -123,7 +125,7 @@ function HomePage() {
   useEffect(() => {
     getAllFavMovies();
   }, [favourites]);
-
+  console.log(movies);
   useEffect(() => {
     getAllwatchList();
   }, [watchList]);
@@ -214,9 +216,7 @@ function HomePage() {
               </Link>
               <div className="sm:flex sm:justify-between sm:mt-4 ">
                 <button
-                  disabled={allWatchList.find(
-                    (e) => e.movieId === movie.id
-                  )}
+                  disabled={allWatchList.find((e) => e.movieId === movie.id)}
                   onClick={() => addwatchList(movie)}
                   className="bg-black border-0  group bg-opacity-0 md:absolute md:bottom-[2%]"
                 >

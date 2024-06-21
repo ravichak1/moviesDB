@@ -24,11 +24,13 @@ function TopImdb() {
 
   const nextPage = (event) => {
     event.preventDefault();
+    scrollTo(0, 0, { behavior: "smooth" })
     setNoPage((prevPage) => prevPage + 1);
   };
 
   const previousPage = (event) => {
     event.preventDefault();
+    scrollTo(0, 0, { behavior: "smooth" })
     if (noPage > 1) {
       setNoPage((prevPage) => prevPage - 1);
     }

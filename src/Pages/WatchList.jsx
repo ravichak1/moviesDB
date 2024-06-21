@@ -10,22 +10,22 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
 
 function WatchList() {
-    const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [noPage, setNoPage] = useState(1);
-  
- let id;
-  function deleteFav(id){
+
+  let id;
+  function deleteFav(id) {
     axios
-    .delete(`${BE_URL}watchlist/${id}`)
-    .then(()=>{
-      getAllMovies()
-    }
-    ).catch((error)=> console.log(error))
+      .delete(`${BE_URL}watchlist/${id}`)
+      .then(() => {
+        getAllMovies();
+      })
+      .catch((error) => console.log(error));
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     deleteFav(id);
-  },[id])
+  }, [id]);
   function getAllMovies() {
     axios
       .get(`${BE_URL}watchlist`)
@@ -40,29 +40,34 @@ function WatchList() {
   console.log(movies);
   useEffect(() => {
     getAllMovies();
-   
   }, []);
-  console.log(movies)
+  console.log(movies);
   return (
     <div className="sm:mt-[5%] min-h-[80vh] md:mt-[0]">
       <h1 className="my-[3%] text-4xl text-red-900">WatchList</h1>
-      <div className="flex md:flex-row md:flex-wrap gap-4 sm:flex-col" >
+      <div className="flex md:flex-row md:flex-wrap gap-4 sm:flex-col">
         {movies.map((movie) => {
           return (
             <div
               key={movie.id}
               className="sm:w-[90%] md:w-[23%] border-2 p-4 flex flex-col hover:shadow-2xl hover:border-0 max-h-min relative"
             >
-              <div className="absolute right-[10%] top-[5%]"><FontAwesomeIcon icon={faCircleXmark} size="2x" onClick={()=>{
-                console.log(movie.id)
-                deleteFav(movie.id)
-              }} className="text-red-900 hover:text-red-500"/></div>
+              <div className="absolute right-[10%] top-[5%]">
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  size="2x"
+                  onClick={() => {
+                    console.log(movie.id);
+                    deleteFav(movie.id);
+                  }}
+                  className="text-red-900 hover:text-red-500"
+                />
+              </div>
               <Link
                 className="text-black"
                 to={`/movie/${movie.movieId}`}
                 noPage={noPage}
               >
-                
                 <img
                   src={`https://image.tmdb.org/t/p/original/${movie.moviesImg}`}
                   alt=""
@@ -86,4 +91,4 @@ function WatchList() {
   );
 }
 
-export default WatchList
+export default WatchList;

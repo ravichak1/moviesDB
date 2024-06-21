@@ -56,7 +56,7 @@ function GenrePage() {
   
   function nextPage(event) {
     event.preventDefault();
-
+    scrollTo(0, 0, { behavior: "smooth" })
     setNoPage((prevPage) => {
       const newNoPage = prevPage + 1;
 
@@ -65,6 +65,7 @@ function GenrePage() {
   }
   function previousPage(event) {
     event.preventDefault();
+    scrollTo(0, 0, { behavior: "smooth" })
     if (noPage > 1) {
       setNoPage((prevPage) => {
         const newNoPage = prevPage - 1;
