@@ -29,7 +29,7 @@ function Navbar() {
 
   return (
     <header className="z-10 bg-black h-[10%] text-red-900 flex justify-between items-center fixed top-0 w-[100%] left-0 py-[1rem] px-[2%] ">
-      <h1 className="text-[150%] font-bold">Pop Corn Time</h1>
+      <h1 className="text-[150%] font-bold"><Link to={"/"}>Pop Corn Time</Link></h1>
 
       <nav>
         <section className={`md:block md:justify-end mt-4 ${hamBurger ? 'sm:block' : 'sm:hidden'}`}>
