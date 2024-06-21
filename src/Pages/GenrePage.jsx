@@ -50,6 +50,7 @@ function GenrePage() {
   const [inputSearchMovie, setInputSearchmovie] = useState(searchMovie);
   const [favourites, setFavourites] = useState([]);
   const handleSearchMovie = (e) => setSearchMovie(e.target.value);
+  
   function nextPage(event) {
     event.preventDefault();
 
@@ -58,6 +59,16 @@ function GenrePage() {
 
       return newNoPage;
     });
+  }
+  function previousPage(event) {
+    event.preventDefault();
+    if (noPage > 1) {
+      setNoPage((prevPage) => {
+        const newNoPage = prevPage - 1;
+
+        return newNoPage;
+      });
+    }
   }
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -68,6 +79,7 @@ function GenrePage() {
       clearTimeout(handler);
     };
   }, [searchMovie]);
+  
 
   function getAllMovies() {
     let URL;
@@ -106,16 +118,6 @@ function GenrePage() {
         console.log(res.data);
       })
       .catch((error) => console.log(error));
-  }
-  function previousPage(event) {
-    event.preventDefault();
-    if (noPage > 1) {
-      setNoPage((prevPage) => {
-        const newNoPage = prevPage - 1;
-
-        return newNoPage;
-      });
-    }
   }
   console.log(genreId);
   useEffect(() => {

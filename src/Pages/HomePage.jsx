@@ -128,7 +128,7 @@ function HomePage() {
     getAllwatchList();
   }, [watchList]);
   return (
-    <div className=" min-h-[80vh] sm:mt-[5%] md:mt-0">
+    <div className=" min-h-[80vh] sm:mt-[5%] md:mt-[2%]">
       <div className="p-4 m-4 flex justify-center text-red-900">
         <Box className="flex items-center gap-4 rounded-full bg-white py-[2%] px-[3%] md:w-[50%] h-[4rem] justify-center sm:w-[100%]">
           <FontAwesomeIcon icon={faFilm} size="2x" />
