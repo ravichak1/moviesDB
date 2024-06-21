@@ -11,13 +11,13 @@ import { useParams } from "react-router-dom";
 import { API_KEY } from "../const";
 import { Link } from "react-router-dom";
 
-import { faFilm } from "@fortawesome/free-solid-svg-icons";
+import { faFilm, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 
 import TextField from "@mui/material/TextField";
-
+const BE_URL = "https://moviesbackend-y9t9.onrender.com/";
 const genreIdMap = {
   action: 28,
   adventure: 12,
@@ -49,6 +49,9 @@ function GenrePage() {
   const [searchMovie, setSearchMovie] = useState("");
   const [inputSearchMovie, setInputSearchmovie] = useState(searchMovie);
   const [favourites, setFavourites] = useState([]);
+  const [allFavourites, setAllFavourites] = useState([]);
+  const [watchList, setWatchList] = useState([])
+  const [allWatchList, setAllWatchList] = useState([])
   const handleSearchMovie = (e) => setSearchMovie(e.target.value);
   
   function nextPage(event) {
@@ -70,6 +73,33 @@ function GenrePage() {
       });
     }
   }
+
+  const addwatchList = (movie) => {
+    const watchlistObj = {
+      movieId: movie.id,
+      moviesImg: movie.poster_path,
+      title: movie.original_title,
+    };
+
+    axios
+      .post(`${BE_URL}watchlist`, watchlistObj)
+      .then((res) => {
+        setWatchList([res.data, ...watchList]);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const getAllwatchList = () => {
+    axios
+      .get(`${BE_URL}watchlist`)
+      .then((response) => {
+        setAllWatchList(response.data);
+      })
+      .catch((error) => console.error(error));
+  };
+  useEffect(() => {
+    getAllwatchList();
+  }, [watchList]);
   useEffect(() => {
     const handler = setTimeout(() => {
       setInputSearchmovie(searchMovie);
@@ -119,6 +149,17 @@ function GenrePage() {
       })
       .catch((error) => console.log(error));
   }
+  const getAllFavMovies = () => {
+    axios
+      .get(`${BE_URL}favorites`)
+      .then((response) => {
+        setAllFavourites(response.data);
+      })
+      .catch((error) => console.error(error));
+  };
+  useEffect(() => {
+    getAllFavMovies();
+  }, [favourites]);
   console.log(genreId);
   useEffect(() => {
     function getAllMovies() {
@@ -184,35 +225,53 @@ function GenrePage() {
                   </p>
                 </div>
               </Link>
-              <div className="flex justify-end mt-4 ">
-                <Link
-                  disabled={
-                    favourites.find(
-                      (each) => each.title === movie.original_title
-                    )
-                      ? true
-                      : false
-                  }
-                  onClick={() => {
-                    addFavourites(movie);
-                  }}
+              <div className="sm:flex sm:justify-between sm:mt-4 ">
+                <button
+                  disabled={allWatchList.find(
+                    (e) => e.movieId === movie.id
+                  )}
+                  onClick={() => addwatchList(movie)}
+                  className="bg-black border-0  group bg-opacity-0 md:absolute md:bottom-[2%]"
                 >
-                  {favourites.find(
+                  {allWatchList.find(
+                    (e) => e.title === movie.original_title
+                  ) ? (
+                    <FontAwesomeIcon
+                      icon={faCirclePlus}
+                      className="text-red-500 opacity-100"
+                      size="2x"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faCirclePlus}
+                      size="2x"
+                      className="group-hover:text-red-300 opacity-100"
+                    />
+                  )}
+                </button>
+                <button
+                  disabled={allFavourites.find(
+                    (each) => each.movieId === movie.id
+                  )}
+                  onClick={() => addFavourites(movie)}
+                  className="bg-black border-0  group bg-opacity-0 md:absolute md:right-[2%] md:bottom-[2%]"
+                >
+                  {allFavourites.find(
                     (each) => each.title === movie.original_title
                   ) ? (
                     <FontAwesomeIcon
                       icon={faHeart}
-                      className="text-red-500"
+                      className="text-red-500 opacity-100"
                       size="2x"
                     />
                   ) : (
                     <FontAwesomeIcon
                       icon={faHeart}
                       size="2x"
-                      className="hover:text-red-300"
+                      className="group-hover:text-red-300 opacity-100"
                     />
                   )}
-                </Link>
+                </button>
               </div>
             </div>
           );
