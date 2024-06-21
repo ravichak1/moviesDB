@@ -10,7 +10,7 @@ import FavoritesPage from "./Pages/FavoritesPage";
 import TopImdb from "./Pages/TopImdb";
 import Footer from "./components/Footer/Footer";
 import WatchList from "./Pages/WatchList";
-
+import ErrorPage from "./Pages/ErrorPage";
 
 function App() {
   const [noPage, setNoPage] = useState(1);
@@ -43,6 +43,7 @@ function App() {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/topimdb" element={<TopImdb />} />
         <Route path="/watchlist" element={<WatchList/>}/>
+        <Route path="*" element={<ErrorPage/>}/>
       </Routes>
       <Footer />
     </div>
